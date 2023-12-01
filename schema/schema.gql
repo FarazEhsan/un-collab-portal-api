@@ -1,0 +1,50 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  """Name of the User"""
+  name: String!
+
+  """Username for the portal"""
+  userName: String!
+
+  """User Email"""
+  email: String!
+
+  """Contact number of the user"""
+  constactNumber: String!
+}
+
+type Query {
+  user(id: Int!): User!
+}
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  removeUser(id: Int!): User!
+}
+
+input CreateUserInput {
+  """Name of the user"""
+  name: String!
+
+  """user name for the portal, its unique"""
+  userName: String!
+
+  """email of the user"""
+  email: String!
+}
+
+input UpdateUserInput {
+  """Name of the user"""
+  name: String
+
+  """user name for the portal, its unique"""
+  userName: String
+
+  """email of the user"""
+  email: String
+  id: Int!
+}
