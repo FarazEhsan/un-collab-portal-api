@@ -2,6 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Skill {
+  _id: ID!
+
+  """Name of the skill"""
+  name: String!
+
+  """Level of the skill"""
+  level: String!
+}
+
 type User {
   """Name of the User"""
   name: String!
@@ -13,38 +23,66 @@ type User {
   email: String!
 
   """Contact number of the user"""
-  constactNumber: String!
+  contactNumber: String!
+
+  """Skills of the user"""
+  skills: [Skill!]
 }
 
 type Query {
-  user(id: Int!): User!
+  allusers: [User!]!
+  user(id: String!): User!
+  allskills: [Skill!]!
+  skill(id: Int!): Skill!
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
+  createSkill(createSkillInput: CreateSkillInput!): Skill!
+  removeSkill(id: Int!): Skill!
 }
 
 input CreateUserInput {
-  """Name of the user"""
+  """Name of the User"""
   name: String!
 
-  """user name for the portal, its unique"""
+  """Username for the portal"""
   userName: String!
 
-  """email of the user"""
+  """User Email"""
   email: String!
+
+  """Contact number of the user"""
+  contactNumber: String
+
+  """Skills of the user"""
+  skills: [CreateSkillInput!]
+}
+
+input CreateSkillInput {
+  """Name of the skill"""
+  name: String!
+
+  """Level of the skill"""
+  level: String!
 }
 
 input UpdateUserInput {
-  """Name of the user"""
+  """Name of the User"""
   name: String
 
-  """user name for the portal, its unique"""
+  """Username for the portal"""
   userName: String
 
-  """email of the user"""
+  """User Email"""
   email: String
+
+  """Contact number of the user"""
+  contactNumber: String
+
+  """Skills of the user"""
+  skills: [CreateSkillInput!]
   id: Int!
 }

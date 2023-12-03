@@ -7,19 +7,18 @@ import { UpdateUserInput } from './dto/update-user.input';
 @Resolver(() => User)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
-//sample graphql playground qurey for the createUser resolver?
   @Mutation(() => User)
   async createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
     return await this.userService.create(createUserInput);
   }
 
-  @Query(() => [User], { name: 'user' })
+  @Query(() => [User], { name: 'allusers' })
   findAll() {
     return this.userService.findAll();
   }
 
   @Query(() => User, { name: 'user' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@Args('id', { type: () => String }) id: string) {
     return this.userService.findOne(id);
   }
 

@@ -1,16 +1,14 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument, Types } from 'mongoose';
+import { Skill } from './skill.schema';
 
 
 export type UserDocument = HydratedDocument<User>
 @ObjectType()
 @Schema()
+//Skill should be a seperate collection in mongoDB as I aslo need to query the skills and also the users with the skills
 export class User {
-  // @Field(() => String, { description: 'User ID' })
-  // @Prop()
-  // _id: string;
-
   @Field(() => String, { description: 'Name of the User' })
   @Prop({required: true})
   name: string;
@@ -26,7 +24,11 @@ export class User {
 
   @Field(() => String, { description: 'Contact number of the user' })
   @Prop({required: false})
-  constactNumber: string;
+  contactNumber: string;
+
+  @Field(()=> [Skill], {description: 'Skills of the user', nullable: true})
+  @Prop({required:false, type:Types.ObjectId, ref: 'Skill'})
+  skills: Types.ObjectId[]
 
 }
 
