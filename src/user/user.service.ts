@@ -21,7 +21,7 @@ export class UserService {
   }
 
   findOne(id: string) {
-    return `This action returns a #${id} user`;
+    return this.userModel.findById(id).exec();
   }
 
   update(id: number, updateUserInput: UpdateUserInput) {

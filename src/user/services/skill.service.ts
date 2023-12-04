@@ -13,4 +13,8 @@ export class SkillService{
         await newSkill.save();
         return this.skillModel.findById(newSkill._id).exec();
     }
+
+    async findManyByIds(ids: string[]) {
+        return this.skillModel.find({_id: {$in: ids}}).exec();
+      }
 }
