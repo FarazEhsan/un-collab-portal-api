@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLDriver } from '@nestjs/graphql';
+import { ForumEventsModule } from './forum-events/forum-events.module';
 
 //I have built the project sucessfully but my schema folder is empty, how do I generate the schema?
 @Module({
@@ -17,6 +18,7 @@ import { GraphQLDriver } from '@nestjs/graphql';
       autoSchemaFile: './schema/schema.gql',
       playground: true,
     }),
+    ForumEventsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
