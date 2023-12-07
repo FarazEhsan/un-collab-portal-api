@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateForumEventDto } from './dto/create-forum-event.dto';
-import { UpdateForumEventDto } from './dto/update-forum-event.dto';
+import { CreateForumDto } from './dto/create-forum.dto';
+import { UpdateForumDto } from './dto/update-forum.dto';
 
 @Injectable()
-export class ForumEventsService {
-  async create(createForumEventDto: CreateForumEventDto) {
+export class ForumService {
+  async create(createForumEventDto: CreateForumDto) {
     return 'This action adds a new forumEvent';
   }
 
@@ -16,7 +16,7 @@ export class ForumEventsService {
     return `This action returns a #${id} forumEvent`;
   }
 
-  update(id: number, updateForumEventDto: UpdateForumEventDto) {
+  update(id: number, updateForumEventDto: UpdateForumDto) {
     return `This action updates a #${id} forumEvent`;
   }
 

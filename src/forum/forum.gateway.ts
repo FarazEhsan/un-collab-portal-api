@@ -1,12 +1,12 @@
 import { WebSocketGateway, SubscribeMessage, MessageBody, WebSocketServer, ConnectedSocket } from '@nestjs/websockets';
 import { Socket, Server } from 'socket.io';
-import { ForumEventsService } from './forum-events.service';
-import { CreateForumEventDto } from './dto/create-forum-event.dto';
-import { UpdateForumEventDto } from './dto/update-forum-event.dto';
+import { ForumService } from './forum.service';
+import { CreateForumDto } from './dto/create-forum.dto';
+import { UpdateForumDto } from './dto/update-forum.dto';
 //how do I access the cleint in this WebSocketGateway?
 @WebSocketGateway()
-export class ForumEventsGateway {
-  constructor(private readonly forumEventsService: ForumEventsService) {}
+export class ForumGateway {
+  constructor(private readonly forumEventsService: ForumService) {}
 
   @WebSocketServer()
   server: Server;
@@ -22,7 +22,7 @@ export class ForumEventsGateway {
   }
 
   @SubscribeMessage('createForumComment')
-  async create(@MessageBody() createForumEventDto: CreateForumEventDto, @ConnectedSocket() client: Socket) {
+  async create(@MessageBody() createForumEventDto: CreateForumDto, @ConnectedSocket() client: Socket) {
     //await this.forumEventsService.create(createForumEventDto)
     console.log('got the message from client', createForumEventDto.comment);
     this.server.to(createForumEventDto.room).emit('createForumComment', createForumEventDto);
@@ -40,7 +40,7 @@ export class ForumEventsGateway {
   }
 
   @SubscribeMessage('updateForumEvent')
-  update(@MessageBody() updateForumEventDto: UpdateForumEventDto) {
+  update(@MessageBody() updateForumEventDto: UpdateForumDto) {
     return this.forumEventsService.update(updateForumEventDto.id, updateForumEventDto);
   }
 

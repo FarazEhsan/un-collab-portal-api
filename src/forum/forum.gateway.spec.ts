@@ -1,16 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ForumEventsGateway } from './forum-events.gateway';
-import { ForumEventsService } from './forum-events.service';
+import { ForumGateway } from './forum.gateway';
+import { ForumService } from './forum.service';
 
 describe('ForumEventsGateway', () => {
-  let gateway: ForumEventsGateway;
+  let gateway: ForumGateway;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ForumEventsGateway, ForumEventsService],
+      providers: [ForumGateway, ForumService],
     }).compile();
 
-    gateway = module.get<ForumEventsGateway>(ForumEventsGateway);
+    gateway = module.get<ForumGateway>(ForumGateway);
   });
 
   it('should be defined', () => {

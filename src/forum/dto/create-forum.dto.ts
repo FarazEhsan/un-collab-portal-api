@@ -1,4 +1,4 @@
-export class CreateForumEventDto {
+export class CreateForumDto {
     comment: string;
     room:string
 }
