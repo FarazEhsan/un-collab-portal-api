@@ -2,13 +2,14 @@ import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument, Types } from 'mongoose';
 import { Skill } from './skill.schema';
+import { Base } from 'src/base/base.schema';
 
 
 export type UserDocument = HydratedDocument<User>
 @ObjectType()
 @Schema()
 
-export class User {
+export class User extends Base {
 
   @Field(() => ID)
   _id: string;
