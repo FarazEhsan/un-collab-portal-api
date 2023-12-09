@@ -11,7 +11,7 @@ import { ForumModule } from './forum/forum.module';
 //I have built the project sucessfully but my schema folder is empty, how do I generate the schema?
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost:27017/un-habitat'),
+    MongooseModule.forRoot('mongodb+srv://dbuser:Mig21fishbed@cluster0.uwle35d.mongodb.net/un-habitat?retryWrites=true&w=majority'),
     UserModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
