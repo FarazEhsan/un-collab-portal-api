@@ -54,6 +54,29 @@ type User {
   skills: [Skill!]!
 }
 
+type Reaction {
+  """
+  Operation performed on the document, 0 for create, 1 for update, 2 for delete
+  """
+  updOperation: Float!
+
+  """Time of creation of the document"""
+  createdAt: DateTime!
+
+  """Time of updation of the document"""
+  updatedAt: DateTime!
+
+  """Type of the reaction enum: [like, dislike]"""
+  type: String!
+  user: User!
+
+  """Comment of the reaction"""
+  comment: Comment
+
+  """Topic of the reaction"""
+  topic: String
+}
+
 type Topic {
   """
   Operation performed on the document, 0 for create, 1 for update, 2 for delete
@@ -66,6 +89,9 @@ type Topic {
   """Time of updation of the document"""
   updatedAt: DateTime!
 
+  """Id of the topic"""
+  _id: ID!
+
   """Title of the topic"""
   title: String!
 
@@ -74,6 +100,35 @@ type Topic {
 
   """Author of the topic"""
   author: User!
+  comments(limit: Int, skip: Int): [Comment!]!
+  commentsCount: Int!
+}
+
+type Comment {
+  """
+  Operation performed on the document, 0 for create, 1 for update, 2 for delete
+  """
+  updOperation: Float!
+
+  """Time of creation of the document"""
+  createdAt: DateTime!
+
+  """Time of updation of the document"""
+  updatedAt: DateTime!
+
+  """Id of the topic"""
+  _id: ID!
+
+  """Text of the comment"""
+  text: String!
+  author: User!
+
+  """Topic of the comment"""
+  topic: Topic!
+
+  """Parent comment of the comment"""
+  parentComment: Comment!
+  reactions: [Reaction!]!
 }
 
 type Query {
@@ -83,6 +138,10 @@ type Query {
   skill(id: Int!): Skill!
   alltopics: [Topic!]!
   topic(id: String!): Topic!
+  allcomments: [Comment!]!
+  comment(id: String!): Comment!
+  allreactions: [Reaction!]!
+  reaction(id: String!): Reaction!
 }
 
 type Mutation {
@@ -91,6 +150,8 @@ type Mutation {
   removeUser(id: Int!): User!
   createSkill(createSkillInput: CreateSkillInput!): Skill!
   removeSkill(id: Int!): Skill!
+  createComment(createCommentInput: CreateCommentDTO!): Comment!
+  createReaction(createReactionInput: CreateReactionDTO!): Reaction!
 }
 
 input CreateUserInput {
@@ -134,4 +195,41 @@ input CreateSkillInput {
 
   """Level of the skill"""
   level: String!
+}
+
+input CreateCommentDTO {
+  """Text of the comment"""
+  text: String!
+
+  """Author/User of the comment"""
+  author: ID!
+
+  """Topic of the comment"""
+  topic: ID!
+
+  """Parent comment of the comment"""
+  parentComment: ID!
+
+  """Reactions of the comment"""
+  reactions: [ID!]!
+}
+
+input CreateReactionDTO {
+  """Type of the reaction enum: [like, dislike]"""
+  type: ReactionType!
+
+  """User of the reaction"""
+  user: ID!
+
+  """Comment of the reaction"""
+  comment: ID
+
+  """Topic of the reaction"""
+  topic: ID
+}
+
+"""The basic reactions"""
+enum ReactionType {
+  Like
+  Dislike
 }

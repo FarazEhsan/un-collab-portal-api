@@ -1,21 +1,42 @@
-import { Prop, Schema } from "@nestjs/mongoose";
-import { Types } from "mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { HydratedDocument, Types } from "mongoose";
 import { Base } from "src/base/base.schema";
 import { Reaction } from "./reaction.schema";
+import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Topic } from "./topic.schema";
+import { User } from "src/user/schemas/user.schema";
 
+
+
+
+export type CommentDocument = HydratedDocument<Comment>
 @Schema()
+@ObjectType()
 export class Comment extends Base {
 
+    @Field(() => ID, {description:'Id of the topic'})
+    _id: string; 
+
+    @Field(() => String, {description:'Text of the comment'})   
     @Prop({required: true, length:1000})
     text:string
 
+    @Field(() => User, {description:'Author/User of the comment'})
     @Prop({required: true, type: Types.ObjectId, ref: 'User'})
     author: string
 
-    @Prop({required: true, type: Types.ObjectId, ref: 'Topic'})
+    @Field(() => Topic, {description:'Topic of the comment'})
+    @Prop({required: true, type: Types.ObjectId, ref: 'Topic', index: true})
+    topic: string
+
+    @Field(() => Comment, {description:'Parent comment of the comment'})
+    @Prop({required: false, type: Types.ObjectId, ref: 'Comment'})
     parentComment?: string
     
-    @Prop({type: [{ type: Types.ObjectId, ref: 'Reaction' }], default: []})
+    @Field(() => [Reaction], {description:'Reactions of the comment'})
+    @Prop({type: [{required:false, type: Types.ObjectId, ref: 'Reaction' }], default: [], index:true})
     reactions?: Reaction[]
 
 }
+
+export const CommentSchema = SchemaFactory.createForClass(Comment);

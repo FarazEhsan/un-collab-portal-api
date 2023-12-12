@@ -11,5 +11,6 @@ import { SkillSchema } from './schemas/skill.schema';
 @Module({
   imports:[MongooseModule.forFeature([{name: 'User', schema: UserSchema}, {name: 'Skill', schema: SkillSchema}])],
   providers: [UserResolver, UserService, SkillResolver, SkillService],
+  exports: [UserService]
 })
 export class UserModule {}
