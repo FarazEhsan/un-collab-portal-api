@@ -1,0 +1,85 @@
+# Write your query or mutation here
+mutation CreateUser {
+  createUser(createUserInput: { name: "John Doe",  userName:"tonyskills",email: "john.doe@example.com",
+  skills:["656d56d685b488dba28516e4","656d56e985b488dba28516e7"]}) {
+    name
+    userName
+    email
+    skills{
+      name
+      level
+    }
+  }
+}
+
+mutation CreateSkill{
+  createSkill(createSkillInput:{name:"Network Administrator", level:"Intermediate"}){
+		name
+    level
+  }
+}
+query GetAllUsersWithSkills {
+  allusers {
+    _id
+    name
+    userName
+    email
+    skills {
+      _id
+      name
+      level
+    }
+  }
+}
+
+query GetAllUsersWithoutSkills {
+  allusers {
+    _id
+    name
+    userName
+    email
+  }
+}
+
+query GetUserWithSkills {
+  user(id: "656dcc14e5959c4947c7589e") {
+    name
+    userName
+    email
+    skills {
+      _id
+      name
+      level
+    }
+  }
+}
+
+query GetAllTopics{
+  alltopics{
+    title
+    description
+    comments{
+			text
+    }
+  }
+}
+
+query TopicDetails {
+  topic(id:"65772d4758af61310e563077"){
+    title
+    commentsCount
+    comments{
+      text
+      author{
+				userName
+      }
+      reactions{
+        type
+        user{
+          name
+        }
+      }
+    }
+  
+  }
+}
