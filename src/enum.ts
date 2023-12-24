@@ -7,6 +7,6 @@ export enum ReactionType {
 
 
 registerEnumType(ReactionType, {
-    name: 'ReactionType', // this one is mandatory
+    name: 'ReactionType', // this one is required
     description: 'The basic reactions', // this one is optional
   });
