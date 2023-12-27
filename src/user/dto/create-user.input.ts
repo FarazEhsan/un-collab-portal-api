@@ -1,5 +1,7 @@
 import { InputType, Int, Field, ID } from '@nestjs/graphql';
-import { CreateSkillInput } from './create-skill.input';
+import { Project } from '../schemas/project.schema';
+
+
 
 
 
@@ -20,4 +22,7 @@ export class CreateUserInput {
 
   @Field(()=> [ID], {description: 'Skills of the user', nullable: true})
   skills?: string[]
+
+  @Field(()=> [Project], {description: 'Projects of the user', nullable: true})
+  projects?: Project[]
 }
