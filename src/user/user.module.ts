@@ -9,12 +9,14 @@ import { SkillSchema } from './schemas/skill.schema';
 import { SDGResolver } from './resolvers/sdg.resolver';
 import { SDGService } from './services/sdg.service';
 import { SDGSchema } from './schemas/sdg.schema';
+import { ProjectSchema } from './schemas/project.schema';
+import { ProjectResolver } from './resolvers/project.resolver';
+import { ProjectService } from './services/project.service';
 
 
-//I have the mongoese schema in the user module and also the resolver and service and ObjectType for the graphql, how do I import the schema into the app module or this module??
 @Module({
-  imports:[MongooseModule.forFeature([{name: 'User', schema: UserSchema}, {name: 'Skill', schema: SkillSchema}, {name: 'SDG', schema: SDGSchema}])],
-  providers: [UserResolver, UserService, SkillResolver, SkillService, SDGResolver, SDGService],
+  imports:[MongooseModule.forFeature([{name: 'User', schema: UserSchema}, {name: 'Skill', schema: SkillSchema}, {name: 'SDG', schema: SDGSchema}, {name: 'Project', schema: ProjectSchema}])],
+  providers: [UserResolver, UserService, SkillResolver, SkillService, SDGResolver, SDGService, ProjectResolver, ProjectService],
   exports: [UserService]
 })
-export class UserModule {}
+export class UserModule {}   

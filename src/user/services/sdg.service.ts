@@ -14,4 +14,12 @@ export class SDGService {
         await newSDG.save();
         return this.sdgModel.findById(newSDG._id).exec();
     }
+
+    async findManyByIds(ids: string[]) {
+        return await this.sdgModel.find({
+            _id: {
+                $in: ids
+            }
+        }).exec();
+    }
 }

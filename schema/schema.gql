@@ -27,50 +27,6 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type Project {
-  """Name of the project"""
-  name: String!
-
-  """Description of the project"""
-  description: String!
-
-  """Related SDGs of the project"""
-  relatedSDGs: String
-
-  """Pictures"""
-  pictures: String
-}
-
-type User {
-  """
-  Operation performed on the document, 0 for create, 1 for update, 2 for delete
-  """
-  updOperation: Float!
-
-  """Time of creation of the document"""
-  createdAt: DateTime!
-
-  """Time of updation of the document"""
-  updatedAt: DateTime!
-  _id: ID!
-
-  """Name of the User"""
-  name: String!
-
-  """Username for the portal"""
-  userName: String!
-
-  """User Email"""
-  email: String!
-
-  """Contact number of the user"""
-  contactNumber: String!
-  skills: [Skill!]!
-
-  """Projects of the user"""
-  projects: [Project!]
-}
-
 type SDG {
   """
   Operation performed on the document, 0 for create, 1 for update, 2 for delete
@@ -100,6 +56,63 @@ type SDG {
 
   """Pictures related to the SDG"""
   pictures: [String!]
+}
+
+type Project {
+  """
+  Operation performed on the document, 0 for create, 1 for update, 2 for delete
+  """
+  updOperation: Float!
+
+  """Time of creation of the document"""
+  createdAt: DateTime!
+
+  """Time of updation of the document"""
+  updatedAt: DateTime!
+
+  """ID of the project"""
+  _id: ID!
+
+  """Name of the project"""
+  name: String!
+
+  """Description of the project"""
+  description: String!
+  relatedSDGs: [SDG!]!
+
+  """Pictures"""
+  pictures: [String!]
+
+  """User who created the project"""
+  user: User!
+}
+
+type User {
+  """
+  Operation performed on the document, 0 for create, 1 for update, 2 for delete
+  """
+  updOperation: Float!
+
+  """Time of creation of the document"""
+  createdAt: DateTime!
+
+  """Time of updation of the document"""
+  updatedAt: DateTime!
+  _id: ID!
+
+  """Name of the User"""
+  name: String!
+
+  """Username for the portal"""
+  userName: String!
+
+  """User Email"""
+  email: String!
+
+  """Contact number of the user"""
+  contactNumber: String!
+  skills: [Skill!]!
+  projects: [Project!]!
 }
 
 type Reaction {
@@ -179,25 +192,13 @@ type Comment {
   reactions: [Reaction!]!
 }
 
-input ProjectInput {
-  """Name of the project"""
-  name: String!
-
-  """Description of the project"""
-  description: String!
-
-  """Related SDGs of the project"""
-  relatedSDGs: String = ""
-
-  """Pictures"""
-  pictures: String = ""
-}
-
 type Query {
   allusers: [User!]!
   user(id: String!): User!
   allskills: [Skill!]!
   skill(id: Int!): Skill!
+  allProjects: [Project!]!
+  project(id: String!): Project!
   alltopics: [Topic!]!
   topic(id: String!): Topic!
   allcomments: [Comment!]!
@@ -213,6 +214,7 @@ type Mutation {
   createSkill(createSkillInput: CreateSkillInput!): Skill!
   removeSkill(id: Int!): Skill!
   create(createSDGInput: CreateSDGInput!): SDG!
+  createProject(createProjectInput: CreateProjectInput!): Project!
   createComment(createCommentInput: CreateCommentDTO!): Comment!
   createReaction(createReactionInput: CreateReactionDTO!): Reaction!
 }
@@ -232,9 +234,6 @@ input CreateUserInput {
 
   """Skills of the user"""
   skills: [ID!]
-
-  """Projects of the user"""
-  projects: [ProjectInput!]
 }
 
 input UpdateUserInput {
@@ -252,9 +251,6 @@ input UpdateUserInput {
 
   """Skills of the user"""
   skills: [ID!]
-
-  """Projects of the user"""
-  projects: [ProjectInput!]
   id: Int!
 }
 
@@ -281,6 +277,23 @@ input CreateSDGInput {
 
   """Pictures related to the SDG"""
   pictures: [String!] = []
+}
+
+input CreateProjectInput {
+  """Name of the project"""
+  name: String!
+
+  """Description of the project"""
+  description: String!
+
+  """Related SDGs of the project"""
+  relatedSDGs: [String!] = []
+
+  """Pictures"""
+  pictures: [String!] = []
+
+  """User who created the project"""
+  user: ID!
 }
 
 input CreateCommentDTO {

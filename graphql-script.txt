@@ -1,4 +1,5 @@
 # Write your query or mutation here
+# Write your query or mutation here
 mutation CreateUser {
   createUser(createUserInput: { name: "John Doe",  userName:"tonyskills",email: "john.doe@example.com",
   skills:["656d56d685b488dba28516e4","656d56e985b488dba28516e7"]}) {
@@ -18,7 +19,7 @@ mutation CreateSkill{
     level
   }
 }
-query GetAllUsersWithSkills {
+query GetAllUsersWithSkillsAndProjects {
   allusers {
     _id
     name
@@ -28,6 +29,13 @@ query GetAllUsersWithSkills {
       _id
       name
       level
+    }
+    projects{
+      name
+      description
+      relatedSDGs{
+        name
+      }
     }
   }
 }
@@ -64,6 +72,7 @@ query GetAllTopics{
   }
 }
 
+
 query TopicDetails {
   topic(id:"65772d4758af61310e563077"){
     title
@@ -83,3 +92,35 @@ query TopicDetails {
   
   }
 }
+
+mutation CreateSDG {
+    create(createSDGInput:{name:"SDG4", code:"SDG4", shortDescription:"very good SDG"}){
+    name
+    code
+  }
+}
+
+mutation CreateProject {
+	createProject(createProjectInput:{name:"Project2", description:"Project description2", user:"658c843779467ba1f1f66275",relatedSDGs:["658c833979467ba1f1f6626f","658be4da9052fce1af0b7e73"]
+  }){
+    name
+    description
+    relatedSDGs{
+      name
+      shortDescription
+    }
+  }
+}
+query GetAllProjects {
+  allProjects{
+    _id
+    name
+    description
+    relatedSDGs{
+      name
+      shortDescription
+    }
+  }
+}
+
+

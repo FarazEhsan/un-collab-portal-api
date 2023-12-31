@@ -1,19 +1,40 @@
-import { Field, InputType, ObjectType } from "@nestjs/graphql";
-import { HydratedDocument } from "mongoose";
+import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { HydratedDocument, Types } from "mongoose";
 import { Base } from "src/base/base.schema";
+import { SDG } from "./sdg.schema";
+import { User } from "./user.schema";
 
 
 export type ProjectDocument = HydratedDocument<Project>
 
+
 @ObjectType()
-@InputType('ProjectInput')
-export class Project {
+@Schema()
+export class Project extends Base {
+
+    @Field(() => ID, {description: 'ID of the project'})
+    _id: string;
+    
     @Field(() => String, {description: 'Name of the project'})
+    @Prop({required: true})
     name: string;
+
     @Field(() => String, {description: 'Description of the project'})
+    @Prop({required: true})
     description: string;
-    @Field(() => String, {description: 'Related SDGs of the project', nullable: true, defaultValue: ''})
+
+    @Field(() => [SDG], {description: 'Related SDGs of the project', nullable: true, defaultValue: []})
+    @Prop({required: false, nullable: true, default: []})
     relatedSDGs:string[]
-    @Field(() => String, {description: 'Pictures', nullable: true, defaultValue: ''})
+
+    @Field(() => [String], {description: 'Pictures', nullable: true, defaultValue: []})
+    @Prop({required: false, nullable: true, default: []})
     pictures:string[]
+
+    @Field(() => User, {description: 'User who created the project'})
+    @Prop({type: Types.ObjectId, ref: 'User', required: true})
+    user: string
 }
+
+export const ProjectSchema = SchemaFactory.createForClass(Project)

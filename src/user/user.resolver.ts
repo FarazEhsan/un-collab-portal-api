@@ -5,10 +5,12 @@ import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { SkillService } from './services/skill.service';
 import { Skill } from './schemas/skill.schema';
+import { Project } from './schemas/project.schema';
+import { ProjectService } from './services/project.service';
 
 @Resolver(() => User)
 export class UserResolver {
-  constructor(private readonly userService: UserService, private readonly skillService: SkillService) {}
+  constructor(private readonly userService: UserService, private readonly skillService: SkillService, private readonly projectService:ProjectService) {}
   @Mutation(() => User)
   async createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
     return await this.userService.create(createUserInput);
@@ -37,5 +39,10 @@ export class UserResolver {
   @ResolveField('skills', returns => [Skill])
   async getSkills(@Parent() user: User) {
     return this.skillService.findManyByIds(user.skills);
+  }
+
+  @ResolveField('projects', returns => [Project])
+  async getProjects(@Parent() user: User) {
+    return this.projectService.findAllByUser(user._id);
   }
 }

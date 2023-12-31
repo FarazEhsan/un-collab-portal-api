@@ -22,7 +22,4 @@ export class CreateUserInput {
 
   @Field(()=> [ID], {description: 'Skills of the user', nullable: true})
   skills?: string[]
-
-  @Field(()=> [Project], {description: 'Projects of the user', nullable: true})
-  projects?: Project[]
 }

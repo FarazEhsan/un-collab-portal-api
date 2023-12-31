@@ -1,9 +1,10 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { HydratedDocument, Types } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { Skill } from './skill.schema';
 import { Base } from 'src/base/base.schema';
 import { Project } from './project.schema';
+
 
 
 export type UserDocument = HydratedDocument<User>
@@ -37,11 +38,8 @@ export class User extends Base {
   skills: string[]
 
   @Field(() => [Project], {description: 'Projects of the user', nullable: true})
-  @Prop ({type: Project, default: []})
   projects?: Project[]
   
-  
-
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
