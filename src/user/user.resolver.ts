@@ -1,4 +1,12 @@
-import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Int,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { User } from './schemas/user.schema';
 import { CreateUserInput } from './dto/create-user.input';
@@ -7,10 +15,17 @@ import { SkillService } from './services/skill.service';
 import { Skill } from './schemas/skill.schema';
 import { Project } from './schemas/project.schema';
 import { ProjectService } from './services/project.service';
+import { GroupService } from './services/group.service';
+import { Group } from './schemas/group.schema';
 
 @Resolver(() => User)
 export class UserResolver {
-  constructor(private readonly userService: UserService, private readonly skillService: SkillService, private readonly projectService:ProjectService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly skillService: SkillService,
+    private readonly projectService: ProjectService,
+    private readonly groupService: GroupService,
+  ) {}
   @Mutation(() => User)
   async createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
     return await this.userService.create(createUserInput);
@@ -27,8 +42,11 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
-  updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
-    return this.userService.update(updateUserInput.id, updateUserInput);
+  updateUser(
+    @Args('id') id: string,
+    @Args('updateUserInput') updateUserInput: UpdateUserInput,
+  ) {
+    return this.userService.update(id, updateUserInput);
   }
 
   @Mutation(() => User)
@@ -36,13 +54,18 @@ export class UserResolver {
     return this.userService.remove(id);
   }
 
-  @ResolveField('skills', returns => [Skill])
+  @ResolveField('skills', (returns) => [Skill])
   async getSkills(@Parent() user: User) {
     return this.skillService.findManyByIds(user.skills);
   }
 
-  @ResolveField('projects', returns => [Project])
+  @ResolveField('projects', (returns) => [Project])
   async getProjects(@Parent() user: User) {
     return this.projectService.findAllByUser(user._id);
+  }
+
+  @ResolveField('groups', (returns) => [Group])
+  async getGroups(@Parent() user: User) {
+    return  await this.groupService.findManyByIds(user.groups);
   }
 }

@@ -87,6 +87,28 @@ type Project {
   user: User!
 }
 
+type Group {
+  """
+  Operation performed on the document, 0 for create, 1 for update, 2 for delete
+  """
+  updOperation: Float!
+
+  """Time of creation of the document"""
+  createdAt: DateTime!
+
+  """Time of updation of the document"""
+  updatedAt: DateTime!
+
+  """ID of the group"""
+  _id: ID!
+
+  """Name of the group"""
+  name: String!
+
+  """Code of the group"""
+  description: String!
+}
+
 type User {
   """
   Operation performed on the document, 0 for create, 1 for update, 2 for delete
@@ -110,9 +132,16 @@ type User {
   email: String!
 
   """Contact number of the user"""
-  contactNumber: String!
+  contactNumber: String
+
+  """City of the user"""
+  city: String
+
+  """Country of the user"""
+  country: String
   skills: [Skill!]!
   projects: [Project!]!
+  groups: [Group!]!
 }
 
 type Reaction {
@@ -209,12 +238,13 @@ type Query {
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
+  updateUser(id: String!, updateUserInput: UpdateUserInput!): User!
   removeUser(id: Int!): User!
   createSkill(createSkillInput: CreateSkillInput!): Skill!
   removeSkill(id: Int!): Skill!
   create(createSDGInput: CreateSDGInput!): SDG!
   createProject(createProjectInput: CreateProjectInput!): Project!
+  createGroup(createGroupInput: CreateGroupInput!): Group!
   createComment(createCommentInput: CreateCommentDTO!): Comment!
   createReaction(createReactionInput: CreateReactionDTO!): Reaction!
 }
@@ -232,26 +262,30 @@ input CreateUserInput {
   """Contact number of the user"""
   contactNumber: String
 
+  """City of the user"""
+  city: String
+
+  """Country of the user"""
+  country: String
+
   """Skills of the user"""
   skills: [ID!]
+
+  """Groups of the user"""
+  groups: [ID!]
 }
 
 input UpdateUserInput {
-  """Name of the User"""
   name: String
-
-  """Username for the portal"""
   userName: String
-
-  """User Email"""
   email: String
-
-  """Contact number of the user"""
   contactNumber: String
-
-  """Skills of the user"""
+  city: String
+  country: String
   skills: [ID!]
-  id: Int!
+
+  """Groups of the user"""
+  groups: [ID!]
 }
 
 input CreateSkillInput {
@@ -294,6 +328,14 @@ input CreateProjectInput {
 
   """User who created the project"""
   user: ID!
+}
+
+input CreateGroupInput {
+  """Name of the group"""
+  name: String!
+
+  """Code of the group"""
+  description: String!
 }
 
 input CreateCommentDTO {

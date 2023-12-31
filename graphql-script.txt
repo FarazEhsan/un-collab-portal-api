@@ -1,7 +1,7 @@
 # Write your query or mutation here
 # Write your query or mutation here
 mutation CreateUser {
-  createUser(createUserInput: { name: "John Doe",  userName:"tonyskills",email: "john.doe@example.com",
+  createUser(createUserInput: { name: "John Doe",  userName:"username1",email: "john.doe@example.com",
   skills:["656d56d685b488dba28516e4","656d56e985b488dba28516e7"]}) {
     name
     userName
@@ -13,10 +13,48 @@ mutation CreateUser {
   }
 }
 
+mutation UpdateUser {
+  updateUser(
+    id: "65919ef5a408ac7838e9d046"
+    updateUserInput: {
+    #  name: "New Name"
+     # userName: "newusername"
+    #  email: "newemail@example.com"
+    #  contactNumber: "1234567890"
+     # city: "New City"
+     # country: "New Country"
+     # skills: ["skillId1", "skillId2"]
+      groups: ["659192528d2e3243ccf760e4", "6591926c8d2e3243ccf760e7"]
+    }
+  ) {
+    _id
+    name
+    userName
+    email
+    contactNumber
+    city
+    country
+    skills{
+     name 
+		}
+    groups{
+      name
+      description
+    }
+  }
+}
+
 mutation CreateSkill{
   createSkill(createSkillInput:{name:"Network Administrator", level:"Intermediate"}){
 		name
     level
+  }
+}
+
+mutation CreateGroup{
+  createGroup(createGroupInput:{name:"Young Gamechangers", description:"Young Gamechangers"}){
+    name
+    description
   }
 }
 query GetAllUsersWithSkillsAndProjects {
@@ -25,6 +63,8 @@ query GetAllUsersWithSkillsAndProjects {
     name
     userName
     email
+    city
+    country
     skills {
       _id
       name

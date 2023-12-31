@@ -24,8 +24,9 @@ export class UserService {
     return this.userModel.findById(id).exec();
   }
 
-  update(id: number, updateUserInput: UpdateUserInput) {
-    return `This action updates a #${id} user`;
+  async update(id: string, updateUserDto: UpdateUserInput) {
+    console.log('user to be updated', updateUserDto)
+    return await this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true }).exec();
   }
 
   remove(id: number) {

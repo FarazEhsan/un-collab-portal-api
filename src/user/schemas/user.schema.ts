@@ -4,6 +4,7 @@ import { HydratedDocument, Types } from 'mongoose';
 import { Skill } from './skill.schema';
 import { Base } from 'src/base/base.schema';
 import { Project } from './project.schema';
+import { Group } from './group.schema';
 
 
 
@@ -29,9 +30,17 @@ export class User extends Base {
   @Prop({required: true})
   email: string;
 
-  @Field(() => String, { description: 'Contact number of the user' })
-  @Prop({required: false})
+  @Field(() => String, { description: 'Contact number of the user', nullable: true, defaultValue: '' })
+  @Prop({required: false, default: ''})
   contactNumber: string;
+
+  @Field(() => String, {description: 'City of the user', nullable: true})
+  @Prop({required: false})
+  city: string;
+
+  @Field(() => String, {description: 'Country of the user', nullable: true})
+  @Prop({required: false})
+  country: string;
 
   @Field(() => [Skill], {description: 'Skills of the user', nullable: true})
   @Prop({type: [{ type: Types.ObjectId, ref: 'Skill' }], default: []})
@@ -39,6 +48,10 @@ export class User extends Base {
 
   @Field(() => [Project], {description: 'Projects of the user', nullable: true})
   projects?: Project[]
+
+  @Field(() => [Group], {description: 'Groups of the user', nullable: true})
+  @Prop({type: [{ type: Types.ObjectId, ref: 'Group' }], default: []})
+  groups: string[]
   
 }
 

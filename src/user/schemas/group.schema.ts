@@ -13,7 +13,6 @@ export type GroupDocument = HydratedDocument<Group>
 export class Group extends Base{
 
     @Field(() => ID, {description: 'ID of the group'})
-    @Prop({required: true})
     _id: string;
     @Field(() => String, {description: 'Name of the group'})
     @Prop({required: true})
