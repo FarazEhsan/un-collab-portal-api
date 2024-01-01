@@ -1,11 +1,19 @@
 # Write your query or mutation here
 # Write your query or mutation here
 mutation CreateUser {
-  createUser(createUserInput: { name: "John Doe",  userName:"username1",email: "john.doe@example.com",
-  skills:["656d56d685b488dba28516e4","656d56e985b488dba28516e7"]}) {
+  createUser(createUserInput: { name: "CoP User",  userName:"copuser",email: "cop.user@example.com",
+  skills:["6592a6a131b1ca3ae8de3b43"], dob:"1991-12-30T00:00:00Z", facebook:"facebook.com",
+  twitter:"x.com", tiktok:"tiktok.com", linkedin:"linkedin.com", instagram:"instagram.com"}) {
     name
     userName
     email
+    dob
+    age
+    facebook
+    twitter
+    tiktok
+    linkedin
+    instagram
     skills{
       name
       level
@@ -13,18 +21,31 @@ mutation CreateUser {
   }
 }
 
+mutation CreateProject {
+	createProject(createProjectInput:{name:"Project2", description:"Project description2", user:"658c843779467ba1f1f66275",relatedSDGs:["658c833979467ba1f1f6626f","658be4da9052fce1af0b7e73"]
+  }){
+    name
+    description
+    relatedSDGs{
+      name
+      shortDescription
+    }
+  }
+}
+
 mutation UpdateUser {
   updateUser(
-    id: "65919ef5a408ac7838e9d046"
+    id: "6592a7f6b3d29da97f359cc3"
     updateUserInput: {
-    #  name: "New Name"
+      #dob:"1991-12-30T00:00:00Z"
+      #name: "New Name"
      # userName: "newusername"
     #  email: "newemail@example.com"
     #  contactNumber: "1234567890"
      # city: "New City"
      # country: "New Country"
      # skills: ["skillId1", "skillId2"]
-      groups: ["659192528d2e3243ccf760e4", "6591926c8d2e3243ccf760e7"]
+     groups: ["659192528d2e3243ccf760e4", "6591926c8d2e3243ccf760e7","6591928c8d2e3243ccf760ea"]
     }
   ) {
     _id
@@ -34,6 +55,13 @@ mutation UpdateUser {
     contactNumber
     city
     country
+    dob
+    age
+    facebook
+    twitter
+    instagram
+    tiktok
+    linkedin
     skills{
      name 
 		}
@@ -89,15 +117,28 @@ query GetAllUsersWithoutSkills {
   }
 }
 
-query GetUserWithSkills {
-  user(id: "656dcc14e5959c4947c7589e") {
+query GetUserDetails {
+  user(id: "6592a7f6b3d29da97f359cc3") {
+    _id
     name
     userName
     email
-    skills {
-      _id
+    contactNumber
+    city
+    country
+    dob
+    age
+    facebook
+    twitter
+    instagram
+    tiktok
+    linkedin
+    skills{
+     name 
+		}
+    groups{
       name
-      level
+      description
     }
   }
 }
@@ -140,17 +181,7 @@ mutation CreateSDG {
   }
 }
 
-mutation CreateProject {
-	createProject(createProjectInput:{name:"Project2", description:"Project description2", user:"658c843779467ba1f1f66275",relatedSDGs:["658c833979467ba1f1f6626f","658be4da9052fce1af0b7e73"]
-  }){
-    name
-    description
-    relatedSDGs{
-      name
-      shortDescription
-    }
-  }
-}
+
 query GetAllProjects {
   allProjects{
     _id
