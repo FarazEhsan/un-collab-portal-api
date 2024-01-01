@@ -68,4 +68,16 @@ export class UserResolver {
   async getGroups(@Parent() user: User) {
     return  await this.groupService.findManyByIds(user.groups);
   }
+
+  @ResolveField('age', (returns) => Int)
+  async getAge (@Parent() user: User){
+    let today = new Date()
+    let dateofbirth= new Date(user.dob)
+    let age = today.getFullYear() - dateofbirth.getFullYear()
+    let month= today.getMonth() - dateofbirth.getMonth()
+    if(month<0 || (month === 0 && today.getDate() < dateofbirth.getDate())){
+      age--;
+    }
+    return age
+  }
 }

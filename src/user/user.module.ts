@@ -16,10 +16,28 @@ import { GroupResolver } from './resolvers/group.resolver';
 import { GroupService } from './services/group.service';
 import { GroupSchema } from './schemas/group.schema';
 
-
 @Module({
-  imports:[MongooseModule.forFeature([{name: 'User', schema: UserSchema}, {name: 'Skill', schema: SkillSchema}, {name: 'SDG', schema: SDGSchema}, {name: 'Project', schema: ProjectSchema}, {name: 'Group', schema: GroupSchema}])],
-  providers: [UserResolver, UserService, SkillResolver, SkillService, SDGResolver, SDGService, ProjectResolver, ProjectService, GroupResolver, GroupService],
-  exports: [UserService]
+  imports: [
+    MongooseModule.forFeature([
+      { name: 'User', schema: UserSchema },
+      { name: 'Skill', schema: SkillSchema },
+      { name: 'SDG', schema: SDGSchema },
+      { name: 'Project', schema: ProjectSchema },
+      { name: 'Group', schema: GroupSchema },
+    ]),
+  ],
+  providers: [
+    UserResolver,
+    UserService,
+    SkillResolver,
+    SkillService,
+    SDGResolver,
+    SDGService,
+    ProjectResolver,
+    ProjectService,
+    GroupResolver,
+    GroupService,
+  ],
+  exports: [UserService],
 })
-export class UserModule {}   
+export class UserModule {}

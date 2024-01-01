@@ -131,8 +131,27 @@ type User {
   """User Email"""
   email: String!
 
+  """Date of Birth"""
+  dob: String!
+  age: Int!
+
   """Contact number of the user"""
   contactNumber: String
+
+  """Facebook link"""
+  facebook: String
+
+  """instagram link"""
+  instagram: String
+
+  """twitter link"""
+  twitter: String
+
+  """tiktok link"""
+  tiktok: String
+
+  """linkedin link"""
+  linkedin: String
 
   """City of the user"""
   city: String
@@ -259,8 +278,26 @@ input CreateUserInput {
   """User Email"""
   email: String!
 
+  """DoB of the user"""
+  dob: String!
+
   """Contact number of the user"""
   contactNumber: String
+
+  """Facebook link"""
+  facebook: String = ""
+
+  """instagram link"""
+  instagram: String = ""
+
+  """twitter link"""
+  twitter: String = ""
+
+  """tiktok link"""
+  tiktok: String = ""
+
+  """linkedin link"""
+  linkedin: String = ""
 
   """City of the user"""
   city: String
@@ -279,7 +316,23 @@ input UpdateUserInput {
   name: String
   userName: String
   email: String
+  dob: String
   contactNumber: String
+
+  """Facebook link"""
+  facebook: String = ""
+
+  """instagram link"""
+  instagram: String = ""
+
+  """twitter link"""
+  twitter: String = ""
+
+  """tiktok link"""
+  tiktok: String = ""
+
+  """linkedin link"""
+  linkedin: String = ""
   city: String
   country: String
   skills: [ID!]

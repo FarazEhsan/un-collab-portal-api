@@ -30,9 +30,36 @@ export class User extends Base {
   @Prop({required: true})
   email: string;
 
+  @Field(() => String, {description: 'Date of Birth'})
+  @Prop({required:true})
+  dob:string
+
+  @Field(() => Number, {description:'Age of the user.'})
+  age:number;
+
   @Field(() => String, { description: 'Contact number of the user', nullable: true, defaultValue: '' })
   @Prop({required: false, default: ''})
   contactNumber: string;
+
+  @Field(() => String , {description:'Facebook link', nullable:true, defaultValue:''})
+  @Prop({required:false})
+  facebook:string
+
+  @Field(() => String , {description:'instagram link', nullable:true, defaultValue:''})
+  @Prop({required:false})
+  instagram:string
+
+  @Field(() => String , {description:'twitter link', nullable:true, defaultValue:''})
+  @Prop({required:false})
+  twitter:string
+
+  @Field(() => String , {description:'tiktok link', nullable:true, defaultValue:''})
+  @Prop({required:false})
+  tiktok:string
+
+  @Field(() => String , {description:'linkedin link', nullable:true, defaultValue:''})
+  @Prop({required:false})
+  linkedin:string
 
   @Field(() => String, {description: 'City of the user', nullable: true})
   @Prop({required: false})
