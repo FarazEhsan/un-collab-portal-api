@@ -8,6 +8,12 @@ export class CreateProjectInput {
     @Field(() => String, {description: 'Name of the project'})
     name: string;
 
+    @Field(()=> String, {description: 'Project Start time'} )
+    startTime:String
+
+    @Field(()=> String, {description: 'Project end time', nullable:true, defaultValue:''} )
+    endTime:String
+
     @Field(() => String, {description: 'Description of the project'})
     description: string;
 

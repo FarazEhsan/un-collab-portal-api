@@ -20,6 +20,14 @@ export class Project extends Base {
     @Prop({required: true})
     name: string;
 
+    @Field(()=> String, {description: 'Project Start time'} )
+    @Prop({required: true})
+    startTime:String
+
+    @Field(()=> String, {description: 'Project end time', nullable:true, defaultValue:''} )
+    @Prop({required: false})
+    endTime:String
+
     @Field(() => String, {description: 'Description of the project'})
     @Prop({required: true})
     description: string;

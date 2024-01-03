@@ -76,6 +76,12 @@ type Project {
   """Name of the project"""
   name: String!
 
+  """Project Start time"""
+  startTime: String!
+
+  """Project end time"""
+  endTime: String
+
   """Description of the project"""
   description: String!
   relatedSDGs: [SDG!]!
@@ -369,6 +375,12 @@ input CreateSDGInput {
 input CreateProjectInput {
   """Name of the project"""
   name: String!
+
+  """Project Start time"""
+  startTime: String!
+
+  """Project end time"""
+  endTime: String = ""
 
   """Description of the project"""
   description: String!
