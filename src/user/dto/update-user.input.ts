@@ -25,19 +25,19 @@ export class UpdateUserInput  {
   @Field(() => String, { nullable: true })
   contactNumber?: string;
 
-  @Field(() => String , {description:'Facebook link', nullable:true, defaultValue:''})
+  @Field(() => String , {description:'Facebook link', nullable:true})
   facebook:string
 
-  @Field(() => String , {description:'instagram link', nullable:true, defaultValue:''})
+  @Field(() => String , {description:'instagram link', nullable:true})
   instagram:string
 
-  @Field(() => String , {description:'twitter link', nullable:true, defaultValue:''})
+  @Field(() => String , {description:'twitter link', nullable:true})
   twitter:string
 
-  @Field(() => String , {description:'tiktok link', nullable:true, defaultValue:''})
+  @Field(() => String , {description:'tiktok link', nullable:true})
   tiktok:string
 
-  @Field(() => String , {description:'linkedin link', nullable:true, defaultValue:''})
+  @Field(() => String , {description:'linkedin link', nullable:true})
   linkedin:string
 
   @Field(() => String, { nullable: true })

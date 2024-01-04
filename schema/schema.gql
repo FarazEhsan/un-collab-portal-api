@@ -345,19 +345,19 @@ input UpdateUserInput {
   contactNumber: String
 
   """Facebook link"""
-  facebook: String = ""
+  facebook: String
 
   """instagram link"""
-  instagram: String = ""
+  instagram: String
 
   """twitter link"""
-  twitter: String = ""
+  twitter: String
 
   """tiktok link"""
-  tiktok: String = ""
+  tiktok: String
 
   """linkedin link"""
-  linkedin: String = ""
+  linkedin: String
   city: String
   country: String
   skills: [ID!]
