@@ -21,6 +21,14 @@ export class User extends Base {
   @Prop({required: true})
   name: string;
 
+  @Field(() => String, { description: 'First Name of the user' })
+  @Prop({required: true})
+  firstName: string;
+
+  @Field(() => String, { description: 'Last name of the user' })
+  @Prop({required: true})
+  lastName: string;
+
   
   @Field(() => String, { description: 'Username for the portal' })
   @Prop({required: true, unique: true})

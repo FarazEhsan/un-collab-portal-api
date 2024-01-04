@@ -131,6 +131,12 @@ type User {
   """Name of the User"""
   name: String!
 
+  """First Name of the user"""
+  firstName: String!
+
+  """Last name of the user"""
+  lastName: String!
+
   """Username for the portal"""
   userName: String!
 
@@ -279,6 +285,12 @@ input CreateUserInput {
   """Name of the User"""
   name: String!
 
+  """First Name of the user"""
+  firstName: String!
+
+  """Last name of the user"""
+  lastName: String!
+
   """Username for the portal"""
   userName: String!
 
@@ -321,6 +333,12 @@ input CreateUserInput {
 
 input UpdateUserInput {
   name: String
+
+  """First Name of the user"""
+  firstName: String
+
+  """Last name of the user"""
+  lastName: String
   userName: String
   email: String
   dob: String

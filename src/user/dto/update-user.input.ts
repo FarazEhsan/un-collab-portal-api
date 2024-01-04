@@ -7,6 +7,12 @@ export class UpdateUserInput  {
   @Field(() => String, { nullable: true })
   name?: string;
 
+  @Field(() => String, { description: 'First Name of the user' , nullable:true})
+  firstName: string;
+
+  @Field(() => String, { description: 'Last name of the user', nullable:true })
+  lastName: string;
+
   @Field(() => String, { nullable: true })
   userName?: string;
 

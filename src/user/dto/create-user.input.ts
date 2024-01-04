@@ -11,6 +11,12 @@ export class CreateUserInput {
   @Field(() => String, { description: 'Name of the User' })
   name: string;
 
+  @Field(() => String, { description: 'First Name of the user' })
+  firstName: string;
+
+  @Field(() => String, { description: 'Last name of the user' })
+  lastName: string;
+
   @Field(() => String, { description: 'Username for the portal' })
   userName: string;
 
