@@ -10,7 +10,7 @@ export type SDGDocument = HydratedDocument<SDG>
 @ObjectType()
 export class SDG  extends Base{
     @Field(() => ID, {description: 'ID of the SDG'})
-    _id: string
+    id: string
 
     @Field(() => String, {description: 'Name of the SDG'})
     @Prop({required: true})

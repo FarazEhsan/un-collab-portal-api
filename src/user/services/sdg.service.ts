@@ -22,4 +22,8 @@ export class SDGService {
             }
         }).exec();
     }
+
+    async findAll(){
+        return await this.sdgModel.find().exec()
+    }
 }

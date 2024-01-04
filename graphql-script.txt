@@ -22,14 +22,17 @@ mutation CreateUser {
 }
 
 mutation CreateProject {
-	createProject(createProjectInput:{name:"Project2", description:"Project description2", user:"658c843779467ba1f1f66275",relatedSDGs:["658c833979467ba1f1f6626f","658be4da9052fce1af0b7e73"]
-  }){
+	createProject(createProjectInput:{name:"Project6", description:"Project description6", user:"6592a7f6b3d29da97f359cc3",relatedSDGs:["658c833979467ba1f1f6626f","658be4da9052fce1af0b7e73"]
+  , startTime:"2023-01-01", endTime:"2023-12-31"}){
     name
     description
     relatedSDGs{
       name
       shortDescription
     }
+   	startTime
+    endTime
+    
   }
 }
 
@@ -104,8 +107,8 @@ query GetAllUsersWithSkillsAndProjects {
       relatedSDGs{
         name
       }
-    }
-  }
+  	}
+	}
 }
 
 query GetAllUsersWithoutSkills {
@@ -118,7 +121,7 @@ query GetAllUsersWithoutSkills {
 }
 
 query GetUserDetails {
-  user(id: "6592a7f6b3d29da97f359cc3") {
+ user(id: "6592a7f6b3d29da97f359cc3") {
     _id
     name
     userName
@@ -133,14 +136,39 @@ query GetUserDetails {
     instagram
     tiktok
     linkedin
-    skills{
-     name 
-		}
-    groups{
+    skills {
+      name
+    }
+    groups {
       name
       description
     }
-  }
+    projects{
+      name
+      description
+      startTime
+      endTime
+      relatedSDGs{
+        id
+        name
+      }
+    }
+      }
+}
+
+query GetUserProjects {
+ user(id: "6592a7f6b3d29da97f359cc3") {
+    projects{
+      name
+      description
+      startTime
+      endTime
+      relatedSDGs{
+        id
+        name
+      }
+    }
+      }
 }
 
 query GetAllTopics{
@@ -191,6 +219,13 @@ query GetAllProjects {
       name
       shortDescription
     }
+  }
+}
+query GetAllSDGs {
+  allsdgs{
+    id
+    name
+    shortDescription
   }
 }
 

@@ -40,7 +40,7 @@ type SDG {
   updatedAt: DateTime!
 
   """ID of the SDG"""
-  _id: ID!
+  id: ID!
 
   """Name of the SDG"""
   name: String!
@@ -251,6 +251,7 @@ type Query {
   user(id: String!): User!
   allskills: [Skill!]!
   skill(id: Int!): Skill!
+  allsdgs: [SDG!]!
   allProjects: [Project!]!
   project(id: String!): Project!
   alltopics: [Topic!]!
