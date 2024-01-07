@@ -22,4 +22,9 @@ export class GroupService {
             }
         }).exec();
     }
+
+
+    async findAll(){
+        return await this.groupModel.find().exec();
+    }
 }

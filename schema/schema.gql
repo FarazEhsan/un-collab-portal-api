@@ -260,6 +260,7 @@ type Query {
   allsdgs: [SDG!]!
   allProjects: [Project!]!
   project(id: String!): Project!
+  allgroups: [Group!]!
   alltopics: [Topic!]!
   topic(id: String!): Topic!
   allcomments: [Comment!]!
