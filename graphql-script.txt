@@ -1,9 +1,9 @@
 # Write your query or mutation here
 # Write your query or mutation here
 mutation CreateUser {
-  createUser(createUserInput: { name: "CoP User",  userName:"copuser",email: "cop.user@example.com",
-  skills:["6592a6a131b1ca3ae8de3b43"], dob:"1991-12-30T00:00:00Z", facebook:"facebook.com",
-  twitter:"x.com", tiktok:"tiktok.com", linkedin:"linkedin.com", instagram:"instagram.com"}) {
+  createUser(createUserInput: { name: "CoP User",firstName:"Cop", lastName:"User"  userName:"copuser2",email: "cop.user@example.com",
+  skills:["6592a6a131b1ca3ae8de3b43"], dob:"2000-12-30T00:00:00Z", facebook:"facebook.com",
+  twitter:"x.com", tiktok:"tiktok.com", linkedin:"linkedin.com", instagram:"instagram.com", _id:""}) {
     name
     userName
     email
@@ -40,6 +40,8 @@ mutation UpdateUser {
   updateUser(
     id: "6592a7f6b3d29da97f359cc3"
     updateUserInput: {
+      firstName:"Cop",
+      lastName:"User"
       #dob:"1991-12-30T00:00:00Z"
       #name: "New Name"
      # userName: "newusername"
@@ -48,11 +50,13 @@ mutation UpdateUser {
      # city: "New City"
      # country: "New Country"
      # skills: ["skillId1", "skillId2"]
-     groups: ["659192528d2e3243ccf760e4", "6591926c8d2e3243ccf760e7","6591928c8d2e3243ccf760ea"]
+     #groups: ["659192528d2e3243ccf760e4", "6591926c8d2e3243ccf760e7","6591928c8d2e3243ccf760ea"]
     }
   ) {
     _id
     name
+    firstName
+    lastName
     userName
     email
     contactNumber
@@ -121,38 +125,27 @@ query GetAllUsersWithoutSkills {
 }
 
 query GetUserDetails {
- user(id: "6592a7f6b3d29da97f359cc3") {
+ user(id: "auth0|659acd8d90a4d76d2e155d34") {
     _id
     name
     userName
     email
     contactNumber
-    city
-    country
     dob
     age
+    city
+    country
     facebook
     twitter
     instagram
     tiktok
     linkedin
-    skills {
+    skills{
       name
     }
-    groups {
-      name
-      description
-    }
-    projects{
-      name
-      description
-      startTime
-      endTime
-      relatedSDGs{
-        id
-        name
-      }
-    }
+  projects{
+    name
+  }
       }
 }
 
@@ -226,6 +219,15 @@ query GetAllSDGs {
     id
     name
     shortDescription
+  }
+}
+
+query GetAllGroups{
+	allgroups{
+    _id
+    name
+    description
+    
   }
 }
 
