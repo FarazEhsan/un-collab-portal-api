@@ -38,7 +38,7 @@ export class UserResolver {
 
   @Query(() => User, { name: 'user' })
   findOne(@Args('id', { type: () => String }) id: string) {
-    return this.userService.findOne(id);
+        return this.userService.findOne(id);
   }
 
   @Mutation(() => User)
@@ -71,6 +71,7 @@ export class UserResolver {
 
   @ResolveField('age', (returns) => Int)
   async getAge (@Parent() user: User){
+    if(user.dob === null || user.dob === undefined) return 0
     let today = new Date()
     let dateofbirth= new Date(user.dob)
     let age = today.getFullYear() - dateofbirth.getFullYear()

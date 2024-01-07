@@ -26,7 +26,7 @@ export class ProjectService {
     }
 
     async findAllByUser(user: any) {
-         const userId= user._id.toString();
-        return await this.projectModel.find({user: userId}).exec();
+    
+        return await this.projectModel.find({user: user}).exec();
     }
 }

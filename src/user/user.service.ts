@@ -20,12 +20,11 @@ export class UserService {
     return this.userModel.find().exec();
   }
 
-  findOne(id: string) {
-    return this.userModel.findById(id).exec();
+  async findOne(id: string) {
+    return await this.userModel.findById(id).exec();
   }
 
   async update(id: string, updateUserDto: UpdateUserInput) {
-    console.log('user to be updated', updateUserDto)
     return await this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true }).exec();
   }
 

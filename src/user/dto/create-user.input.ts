@@ -8,6 +8,9 @@ import { Types } from 'mongoose';
 
 @InputType()
 export class CreateUserInput {
+  @Field(() => ID, {description: 'ID of the user', nullable: false})
+  _id: string
+
   @Field(() => String, { description: 'Name of the User' })
   name: string;
 
@@ -23,7 +26,7 @@ export class CreateUserInput {
   @Field(() => String, { description: 'User Email' })
   email: string;
 
-  @Field(()=> String, {description:'DoB of the user'})
+  @Field(() => String, {description: 'Date of Birth', nullable:true, defaultValue:''})
   dob:string
 
   @Field(() => String, { description: 'Contact number of the user', nullable: true })

@@ -15,6 +15,7 @@ export type UserDocument = HydratedDocument<User>
 export class User extends Base {
 
   @Field(() => ID)
+  @Prop({ required: true })
   _id: string;
 
   @Field(() => String, { description: 'Name of the User' })
@@ -38,11 +39,11 @@ export class User extends Base {
   @Prop({required: true})
   email: string;
 
-  @Field(() => String, {description: 'Date of Birth'})
-  @Prop({required:true})
+  @Field(() => String, {description: 'Date of Birth', nullable:true})
+  @Prop({required:false})
   dob:string
 
-  @Field(() => Number, {description:'Age of the user.'})
+  @Field(() => Number, {description:'Age of the user.', nullable:true})
   age:number;
 
   @Field(() => String, { description: 'Contact number of the user', nullable: true, defaultValue: '' })

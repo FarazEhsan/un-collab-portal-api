@@ -144,7 +144,7 @@ type User {
   email: String!
 
   """Date of Birth"""
-  dob: String!
+  dob: String
   age: Int!
 
   """Contact number of the user"""
@@ -282,6 +282,9 @@ type Mutation {
 }
 
 input CreateUserInput {
+  """ID of the user"""
+  _id: ID!
+
   """Name of the User"""
   name: String!
 
@@ -297,8 +300,8 @@ input CreateUserInput {
   """User Email"""
   email: String!
 
-  """DoB of the user"""
-  dob: String!
+  """Date of Birth"""
+  dob: String = ""
 
   """Contact number of the user"""
   contactNumber: String
