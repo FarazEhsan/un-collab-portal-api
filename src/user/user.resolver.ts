@@ -71,7 +71,7 @@ export class UserResolver {
 
   @ResolveField('age', (returns) => Int)
   async getAge (@Parent() user: User){
-    if(user.dob === null || user.dob === undefined) return 0
+    if(user.dob === null || user.dob === undefined || user.dob == "") return 0
     let today = new Date()
     let dateofbirth= new Date(user.dob)
     let age = today.getFullYear() - dateofbirth.getFullYear()
