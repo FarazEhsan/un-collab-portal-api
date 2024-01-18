@@ -10,7 +10,7 @@ import { CreateTopicDto } from './topic/dto/create-topic-dto';
 import { ReactionService } from './reaction/reaction.service';
 import { CreateReactionDTO } from './reaction/dto/create-reaction-dto';
 
-@WebSocketGateway()
+@WebSocketGateway({ cors: true })
 export class ForumGateway {
   constructor(private readonly forumEventsService: ForumService,private readonly topicService: TopicService, private readonly commentService: CommentService, private readonly reactionService:ReactionService) {}
 
