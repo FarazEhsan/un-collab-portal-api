@@ -221,6 +221,9 @@ type Topic {
 
   """Author of the topic"""
   author: User!
+
+  """Images related to the topic"""
+  images: [String!]
   comments(limit: Int, skip: Int): [Comment!]!
   commentsCount: Int!
 }

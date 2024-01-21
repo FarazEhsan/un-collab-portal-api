@@ -27,6 +27,10 @@ export class Topic extends Base {
     @Prop({required: true, type: Types.ObjectId, ref: 'User'})
     author: string
 
+    @Field(() => [String], {description:'Images related to the topic', nullable: true})
+    @Prop({required: false})
+    images: string[]
+
     @Field(() => [Comment], {description: 'Comments related to the Forum', nullable: true})
     comments: Comment[]
 
