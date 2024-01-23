@@ -218,8 +218,6 @@ type Topic {
 
   """Description of the topic"""
   description: String!
-
-  """Author of the topic"""
   author: User!
 
   """Images related to the topic"""

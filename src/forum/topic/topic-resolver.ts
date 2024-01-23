@@ -3,12 +3,14 @@ import { Topic } from 'src/forum/schemas/topic.schema';
 import { TopicService } from './topic.service';
 import { CommentService } from '../comment/comment.service';
 import { Comment } from '../schemas/comment.schema';
+import { User } from 'src/user/schemas/user.schema';
+import { UserService } from 'src/user/user.service';
 
 
 @Resolver(() => Topic)
 export class TopicResolver {
 
-    constructor(private readonly topicService:TopicService, private readonly commentService:CommentService){}
+    constructor(private readonly topicService:TopicService, private readonly commentService:CommentService, private readonly userService:UserService){}
 
     @Query(() => [Topic], {name: 'alltopics'})
     findAll(){
@@ -18,6 +20,13 @@ export class TopicResolver {
     @Query(() => Topic, {name: 'topic'})
     find(@Args('id', {type: ()=> String}) id: string){
         return this.topicService.findOne(id);
+    }
+
+    @ResolveField('author', () => User)
+    async getAuthor(@Parent() comment: Comment) {
+        const { author } = comment;
+        console.log('author in comment resolver', author)
+        return this.userService.findOne(author);
     }
 
     @ResolveField(('comments'), () => [Comment])
