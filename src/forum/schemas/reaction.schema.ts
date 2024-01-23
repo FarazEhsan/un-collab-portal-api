@@ -15,7 +15,7 @@ export type ReactionDocument= HydratedDocument<Reaction>
 export class Reaction extends Base {
 
 
-    @Field(() => String, {description:'Type of the reaction enum: [like, dislike]'})
+    @Field(() => String, {description:'Type of the reaction enum: [UPVOTE, DOWNVOTE]'})
     @Prop({required: true, enum: ReactionType})
     type:string
 
