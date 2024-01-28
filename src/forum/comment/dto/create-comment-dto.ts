@@ -14,7 +14,7 @@ export class CreateCommentDTO{
     @Field(() => ID, {description:'Topic of the comment'})
     topic: string
 
-    @Field(() => ID, {description:'Parent comment of the comment'})
+    @Field(() => ID, {description:'Parent comment of the comment', nullable: true})
     parentComment?: string
     
     @Field(() => [ID], {description:'Reactions of the comment'})

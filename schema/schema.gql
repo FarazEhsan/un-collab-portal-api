@@ -248,9 +248,7 @@ type Comment {
 
   """Topic of the comment"""
   topic: Topic!
-
-  """Parent comment of the comment"""
-  parentComment: Comment!
+  parentComment: Comment
   reactions: [Reaction!]!
 }
 
@@ -439,7 +437,7 @@ input CreateCommentDTO {
   topic: ID!
 
   """Parent comment of the comment"""
-  parentComment: ID!
+  parentComment: ID
 
   """Reactions of the comment"""
   reactions: [ID!]!

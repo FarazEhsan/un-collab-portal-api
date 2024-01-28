@@ -29,7 +29,7 @@ export class Comment extends Base {
     @Prop({required: true, type: Types.ObjectId, ref: 'Topic', index: true})
     topic: string
 
-    @Field(() => Comment, {description:'Parent comment of the comment'})
+    @Field(() => Comment, {description:'Parent comment of the comment', nullable: true})
     @Prop({required: false, type: Types.ObjectId, ref: 'Comment'})
     parentComment?: string
     

@@ -39,4 +39,15 @@ export class CommentResolver {
         return this.reactionService.findAllByComment(_id.toString());
     }
 
+    @ResolveField(('parentComment'),()=>Comment, {nullable: true})
+    getParentComment(@Parent() comment: Comment){
+        const { parentComment } = comment;
+        if(comment.parentComment){
+          console.log('parentComment in comment resolver', parentComment)
+          return this.commentService.findOne(parentComment);
+        }
+        return null
+        
+    }
+
 }
