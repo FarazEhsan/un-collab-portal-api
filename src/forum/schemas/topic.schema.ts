@@ -4,6 +4,7 @@ import { HydratedDocument, Types } from "mongoose";
 import { Base } from "src/base/base.schema";
 import { User } from "src/user/schemas/user.schema";
 import { Comment } from "./comment.schema";
+import { Reaction } from "./reaction.schema";
 
 
 
@@ -30,6 +31,9 @@ export class Topic extends Base {
     @Field(() => [String], {description:'Images related to the topic', nullable: true})
     @Prop({required: false})
     images: string[]
+
+    @Field(() => [Reaction], {description:'Reactions of the Topic'})
+    reactions?: Reaction[]
 
     @Field(() => [Comment], {description: 'Comments related to the Forum', nullable: true})
     comments: Comment[]

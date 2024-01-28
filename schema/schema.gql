@@ -187,7 +187,7 @@ type Reaction {
   """Time of updation of the document"""
   updatedAt: DateTime!
 
-  """Type of the reaction enum: [like, dislike]"""
+  """Type of the reaction enum: [UPVOTE, DOWNVOTE]"""
   type: String!
   user: User!
 
@@ -222,6 +222,7 @@ type Topic {
 
   """Images related to the topic"""
   images: [String!]
+  reactions: [Reaction!]!
   comments(limit: Int, skip: Int): [Comment!]!
   commentsCount: Int!
 }
@@ -445,7 +446,7 @@ input CreateCommentDTO {
 }
 
 input CreateReactionDTO {
-  """Type of the reaction enum: [like, dislike]"""
+  """Type of the reaction enum: [UPVOTE, DOWNVOTE]"""
   type: ReactionType!
 
   """User of the reaction"""

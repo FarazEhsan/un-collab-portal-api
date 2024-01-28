@@ -5,12 +5,14 @@ import { CommentService } from '../comment/comment.service';
 import { Comment } from '../schemas/comment.schema';
 import { User } from 'src/user/schemas/user.schema';
 import { UserService } from 'src/user/user.service';
+import { Reaction } from '../schemas/reaction.schema';
+import { ReactionService } from '../reaction/reaction.service';
 
 
 @Resolver(() => Topic)
 export class TopicResolver {
 
-    constructor(private readonly topicService:TopicService, private readonly commentService:CommentService, private readonly userService:UserService){}
+    constructor(private readonly topicService:TopicService, private readonly commentService:CommentService, private readonly userService:UserService,private readonly reactionService: ReactionService){}
 
     @Query(() => [Topic], {name: 'alltopics'})
     findAll(){
@@ -20,6 +22,11 @@ export class TopicResolver {
     @Query(() => Topic, {name: 'topic'})
     find(@Args('id', {type: ()=> String}) id: string){
         return this.topicService.findOne(id);
+    }
+    @ResolveField(('reactions'), () => [Reaction])
+    getReactions(@Parent() topic: Topic){
+        const _id  = topic._id;
+        return this.reactionService.findAllByTopic(_id.toString());
     }
 
     @ResolveField('author', () => User)

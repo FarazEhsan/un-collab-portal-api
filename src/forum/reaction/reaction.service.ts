@@ -17,7 +17,12 @@ export class ReactionService {
         return this.reactionModel.findById(id).exec();
     }
 
-    findAllByComment(comment: any)  {
-        return this.reactionModel.find(comment).exec();
+    findAllByComment(_id: string)  {
+        console.log('id in reaction service', _id);
+        return this.reactionModel.find({comment:_id}).exec();
+    }
+
+    findAllByTopic(_id: string)  {
+        return this.reactionModel.find({topic:_id}).exec();
     }
 }

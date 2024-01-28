@@ -34,9 +34,9 @@ export class CommentResolver {
     }
 
     @ResolveField(('reactions'), () => [Reaction])
-    getComments(@Parent() comment: Comment){
+    getReactions(@Parent() comment: Comment){
         const { _id } = comment;
-        return this.reactionService.findAllByComment({ comment: _id.toString() });
+        return this.reactionService.findAllByComment(_id.toString());
     }
 
 }

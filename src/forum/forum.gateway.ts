@@ -43,11 +43,19 @@ export class ForumGateway {
     return createCommentDTO
   }
 
-  @SubscribeMessage('postReaction')
-  async createReaction(@MessageBody() createReactionDTO: CreateReactionDTO, @ConnectedSocket() client: Socket) {
+  @SubscribeMessage('postCommentReaction')
+  async createCommentReaction(@MessageBody() createReactionDTO: CreateReactionDTO, @ConnectedSocket() client: Socket) {
     console.log('got the message from client', createReactionDTO);
     await this.reactionService.create(createReactionDTO);
-    this.server.to(createReactionDTO.topic).emit('reactionPosted', createReactionDTO);
+    this.server.to(createReactionDTO.topic).emit('commentReactionPosted', createReactionDTO);
+    return createReactionDTO
+  }
+
+  @SubscribeMessage('postTopicReaction')
+  async createTopicReaction(@MessageBody() createReactionDTO: CreateReactionDTO, @ConnectedSocket() client: Socket) {
+    console.log('got the message from client', createReactionDTO);
+    await this.reactionService.create(createReactionDTO);
+    this.server.to(createReactionDTO.topic).emit('topicReactionPosted', createReactionDTO);
     return createReactionDTO
   }
   @SubscribeMessage('findAllForumEvents')

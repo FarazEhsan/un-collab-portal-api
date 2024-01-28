@@ -34,7 +34,6 @@ export class Comment extends Base {
     parentComment?: string
     
     @Field(() => [Reaction], {description:'Reactions of the comment'})
-    @Prop({type: [{required:false, type: Types.ObjectId, ref: 'Reaction' }], default: [], index:true})
     reactions?: Reaction[]
 
 }

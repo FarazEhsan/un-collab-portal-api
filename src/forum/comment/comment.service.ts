@@ -11,7 +11,7 @@ export class CommentService {
 
         const newComment= new this.commentModel(createCommentDto);
         await newComment.save();
-        return  this.commentModel.find(newComment.id).exec();
+        return  this.commentModel.find({_id:newComment.id}).exec();
  
     }
     
