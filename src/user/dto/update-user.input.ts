@@ -19,6 +19,9 @@ export class UpdateUserInput  {
   @Field(() => String, { nullable: true })
   email?: string;
 
+  @Field(() => String, { description: 'User Picture' , nullable:true})
+  picture: string;
+
   @Field(()=> String, {nullable:true})
   dob:string
 

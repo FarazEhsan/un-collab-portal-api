@@ -26,6 +26,9 @@ export class CreateUserInput {
   @Field(() => String, { description: 'User Email' })
   email: string;
 
+  @Field(() => String, { description: 'User Picture' , nullable:true})
+  picture: string;
+
   @Field(() => String, {description: 'Date of Birth', nullable:true, defaultValue:''})
   dob:string
 

@@ -39,6 +39,10 @@ export class User extends Base {
   @Prop({required: true})
   email: string;
 
+  @Field(() => String, { description: 'User Picture' , nullable:true})
+  @Prop({required: false})
+  picture: string;
+  
   @Field(() => String, {description: 'Date of Birth', nullable:true})
   @Prop({required:false})
   dob:string

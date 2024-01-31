@@ -143,6 +143,9 @@ type User {
   """User Email"""
   email: String!
 
+  """User Picture"""
+  picture: String
+
   """Date of Birth"""
   dob: String
   age: Int!
@@ -301,6 +304,9 @@ input CreateUserInput {
   """User Email"""
   email: String!
 
+  """User Picture"""
+  picture: String
+
   """Date of Birth"""
   dob: String = ""
 
@@ -345,6 +351,9 @@ input UpdateUserInput {
   lastName: String
   userName: String
   email: String
+
+  """User Picture"""
+  picture: String
   dob: String
   contactNumber: String
 

@@ -10,12 +10,37 @@ import { CreateTopicDto } from './topic/dto/create-topic-dto';
 import { ReactionService } from './reaction/reaction.service';
 import { CreateReactionDTO } from './reaction/dto/create-reaction-dto';
 
+interface Author {
+  _id: string;
+  userName: string;
+}
+
+interface Comment {
+  _id: any;
+  updOperation: number;
+  text: string;
+  author: Author;
+  topic: string;
+  parentComment: null | string; 
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+}
+
+interface PopulatedComment extends Omit<Comment, 'author'> {
+  author: Author;
+}
+
 @WebSocketGateway({ cors: true })
+
+
 export class ForumGateway {
   constructor(private readonly forumEventsService: ForumService,private readonly topicService: TopicService, private readonly commentService: CommentService, private readonly reactionService:ReactionService) {}
 
   @WebSocketServer()
   server: Server;
+
+  
 
 
   @SubscribeMessage('joinForum')
@@ -38,8 +63,20 @@ export class ForumGateway {
   @SubscribeMessage('postComment')
   async createComment(@MessageBody() createCommentDTO: CreateCommentDTO, @ConnectedSocket() client: Socket) {
     console.log('got the message from client', createCommentDTO);
-    await this.commentService.create(createCommentDTO);
-    this.server.to(createCommentDTO.topic).emit('commentPosted', createCommentDTO);
+    const newComment= (await this.commentService.create(createCommentDTO)) as unknown as PopulatedComment[];
+    const newCommentFormatted= 
+    {
+      _id: newComment[0]._id.toString(),
+      text: newComment[0].text,
+      createdAt: newComment[0].createdAt,
+      author: {
+        userName: newComment[0].author.userName,
+        __typename: "User"
+      },
+      parentComment: newComment[0].parentComment,
+      __typename: "Comment"
+    }
+    this.server.to(createCommentDTO.topic).emit('commentPosted', newCommentFormatted);
     return createCommentDTO
   }
 
