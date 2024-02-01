@@ -94,8 +94,18 @@ export class ForumGateway {
   @SubscribeMessage('postCommentReaction')
   async createCommentReaction(@MessageBody() createReactionDTO: CreateReactionDTO, @ConnectedSocket() client: Socket) {
     console.log('got the message from client', createReactionDTO);
-    await this.reactionService.create(createReactionDTO);
-    this.server.to(createReactionDTO.topic).emit('commentReactionPosted', createReactionDTO);
+    const newReaction= await this.reactionService.create(createReactionDTO);
+    const newReactionFormatted ={
+      _id: newReaction._id.toString(),
+      type: newReaction.type,
+      user: {
+        _id: newReaction.user.toString(),
+        __typename: "User"
+      },
+      __typename: "Reaction"
+    }
+    this.server.to(createReactionDTO.topic).emit('commentReactionPosted', newReactionFormatted);
+    console.log('new reaction', newReactionFormatted);
     return createReactionDTO
   }
 
