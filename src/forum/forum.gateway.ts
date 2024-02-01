@@ -9,6 +9,7 @@ import { TopicService } from './topic/topic.service';
 import { CreateTopicDto } from './topic/dto/create-topic-dto';
 import { ReactionService } from './reaction/reaction.service';
 import { CreateReactionDTO } from './reaction/dto/create-reaction-dto';
+import { ReactionType } from 'src/enum';
 
 interface Author {
   _id: string;
@@ -27,6 +28,16 @@ interface Comment {
   __v: number;
 }
 
+interface User {
+  __typename: "User";
+  _id: string;
+}
+
+interface Reaction {
+  __typename: "Reaction";
+  type: ReactionType;
+  user: User;
+}
 interface PopulatedComment extends Omit<Comment, 'author'> {
   author: Author;
 }
@@ -63,7 +74,7 @@ export class ForumGateway {
   @SubscribeMessage('postComment')
   async createComment(@MessageBody() createCommentDTO: CreateCommentDTO, @ConnectedSocket() client: Socket) {
     console.log('got the message from client', createCommentDTO);
-    const newComment= (await this.commentService.create(createCommentDTO)) as unknown as PopulatedComment[];
+    const newComment= await this.commentService.create(createCommentDTO) as unknown as PopulatedComment[];
     const newCommentFormatted= 
     {
       _id: newComment[0]._id.toString(),
@@ -91,8 +102,18 @@ export class ForumGateway {
   @SubscribeMessage('postTopicReaction')
   async createTopicReaction(@MessageBody() createReactionDTO: CreateReactionDTO, @ConnectedSocket() client: Socket) {
     console.log('got the message from client', createReactionDTO);
-    await this.reactionService.create(createReactionDTO);
-    this.server.to(createReactionDTO.topic).emit('topicReactionPosted', createReactionDTO);
+    const newReaction= await this.reactionService.create(createReactionDTO);
+    const newReactionFormatted ={
+      _id: newReaction._id.toString(),
+      type: newReaction.type,
+      user: {
+        _id: newReaction.user.toString(),
+        __typename: "User"
+      },
+      __typename: "Reaction"
+    }
+    this.server.to(createReactionDTO.topic).emit('topicReactionPosted', newReactionFormatted);
+    console.log('new reaction', newReactionFormatted);
     return createReactionDTO
   }
   @SubscribeMessage('findAllForumEvents')
