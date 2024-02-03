@@ -98,6 +98,7 @@ export class ForumGateway {
     const newReactionFormatted ={
       _id: newReaction._id.toString(),
       type: newReaction.type,
+      comment: newReaction.comment,
       user: {
         _id: newReaction.user.toString(),
         __typename: "User"
