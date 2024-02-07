@@ -280,6 +280,7 @@ type Mutation {
   removeSkill(id: Int!): Skill!
   create(createSDGInput: CreateSDGInput!): SDG!
   createProject(createProjectInput: CreateProjectInput!): Project!
+  updateProject(id: String!, updateProjectInput: UpdateProjectInput!): Project!
   createGroup(createGroupInput: CreateGroupInput!): Group!
   createComment(createCommentInput: CreateCommentDTO!): Comment!
   createReaction(createReactionInput: CreateReactionDTO!): Reaction!
@@ -425,6 +426,29 @@ input CreateProjectInput {
 
   """User who created the project"""
   user: ID!
+}
+
+input UpdateProjectInput {
+  """Name of the project"""
+  name: String
+
+  """Project Start time"""
+  startTime: String
+
+  """Project end time"""
+  endTime: String
+
+  """Description of the project"""
+  description: String
+
+  """Related SDGs of the project"""
+  relatedSDGs: [String!]
+
+  """Pictures"""
+  pictures: [String!]
+
+  """User who created the project"""
+  user: ID
 }
 
 input CreateGroupInput {

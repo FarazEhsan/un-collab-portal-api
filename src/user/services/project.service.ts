@@ -4,6 +4,7 @@ import { Project } from '../schemas/project.schema';
 import { Model } from 'mongoose';
 
 import { CreateProjectInput } from '../dto/create-project.input';
+import { UpdateProjectInput } from '../dto/update-project.input';
 
 @Injectable()
 export class ProjectService {
@@ -15,6 +16,9 @@ export class ProjectService {
         await newProject.save();
         return this.projectModel.findById(newProject._id).exec();
 
+    }
+    async updateProject(id: string, updateProjectInput: UpdateProjectInput) {
+        return await this.projectModel.findByIdAndUpdate(id, updateProjectInput, {new: true}).exec();
     }
 
     async findAll(){
