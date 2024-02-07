@@ -42,6 +42,16 @@ interface PopulatedComment extends Omit<Comment, 'author'> {
   author: Author;
 }
 
+interface UserAndComment {
+  user: string;
+  comment: string;
+}
+
+interface UserAndTopic{
+  user: string;
+  topic: string;
+}
+
 @WebSocketGateway({ cors: true })
 
 
@@ -127,6 +137,35 @@ export class ForumGateway {
     console.log('new reaction', newReactionFormatted);
     return createReactionDTO
   }
+
+  @SubscribeMessage('removeReaction')
+  async removeCommentReaction(@MessageBody() id: string, @ConnectedSocket() client: Socket) {
+    console.log('got the message from client', id);
+    const removedReaction= await this.reactionService.remove(id);
+    this.server.emit('reactionRemoved', id);
+    console.log('removed reaction', removedReaction);
+    return id
+  }
+
+  @SubscribeMessage('removeUserCommentReaction')
+  async removeUserCommentReaction(@MessageBody() userAndComment: UserAndComment, @ConnectedSocket() client: Socket) {
+    const {user, comment} = userAndComment;
+    console.log('got the message from client', user, comment);
+    const removedReaction= await this.reactionService.removeByUserAndComment(user, comment);
+    this.server.emit('userCommentReactionRemoved', user, comment);
+    console.log('removed reaction', removedReaction);
+    return removedReaction
+  }
+  @SubscribeMessage('removeUserTopicReaction')
+  async removeUserTopicReaction(@MessageBody() userAndTopic: UserAndTopic, @ConnectedSocket() client: Socket) {
+    const {user, topic} = userAndTopic;
+    console.log('got the message from client', user, topic);
+    const removedReaction= await this.reactionService.removeByUserAndTopic(user, topic);
+    this.server.emit('userTopicReactionRemoved', user, topic);
+    console.log('removed reaction', removedReaction);
+    return user
+  }
+
   @SubscribeMessage('findAllForumEvents')
   findAll() {
     return this.forumEventsService.findAll();

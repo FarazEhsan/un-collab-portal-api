@@ -25,4 +25,16 @@ export class ReactionService {
     findAllByTopic(_id: string)  {
         return this.reactionModel.find({topic:_id}).populate('user').exec();
     }
+
+    remove(id: string) {
+        return this.reactionModel.findByIdAndDelete(id).exec();
+    }
+    async removeByUserAndTopic(user: string, topic: string) {
+        return await this.reactionModel.findOneAndDelete({user, topic}).exec();
+    }
+
+    async removeByUserAndComment(user: string, comment: string) {
+        console.log('user and comment in reaction service', user, comment)
+        return await this.reactionModel.findOneAndDelete({user, comment}).exec();
+    }
 }

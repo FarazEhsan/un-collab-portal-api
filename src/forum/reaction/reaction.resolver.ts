@@ -25,6 +25,21 @@ export class ReactionResolver {
       return this.reactionService.findOne(id);
     }
 
+    @Mutation(() => Reaction)
+    removeReaction(@Args('id', {type: () => String}) id: string){ 
+      return this.reactionService.remove(id);
+    }
+
+    @Mutation(() => Reaction)
+    removeByUserAndTopic(@Args('user', {type: () => String}) user: string, @Args('topic', {type: () => String}) topic: string){
+      return this.reactionService.removeByUserAndTopic(user, topic);
+    }
+
+    @Mutation(() => Reaction)
+    removeByUserAndComment(@Args('user', {type: () => String}) user: string, @Args('comment', {type: () => String}) comment: string){
+      return this.reactionService.removeByUserAndComment(user, comment);
+    }
+
     @ResolveField(('user'), () => User)
     async getUser(@Parent() reaction: Reaction) {
         const { user } = reaction;

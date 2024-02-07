@@ -284,6 +284,9 @@ type Mutation {
   createGroup(createGroupInput: CreateGroupInput!): Group!
   createComment(createCommentInput: CreateCommentDTO!): Comment!
   createReaction(createReactionInput: CreateReactionDTO!): Reaction!
+  removeReaction(id: String!): Reaction!
+  removeByUserAndTopic(user: String!, topic: String!): Reaction!
+  removeByUserAndComment(user: String!, comment: String!): Reaction!
 }
 
 input CreateUserInput {
