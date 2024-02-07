@@ -7,6 +7,8 @@ import { User } from 'src/user/schemas/user.schema';
 import { UserService } from 'src/user/user.service';
 import { Reaction } from '../schemas/reaction.schema';
 import { ReactionService } from '../reaction/reaction.service';
+import { ReactionCount } from '../reaction/reactioncount.model';
+
 
 
 @Resolver(() => Topic)
@@ -46,5 +48,11 @@ export class TopicResolver {
     getCommentsCount(@Parent() topic: Topic){
         const { _id } = topic;
         return this.commentService.countAllByTopic({ topic: _id.toString() });
+    }
+
+    @ResolveField(('reactionCounts'), () => [ReactionCount])
+    getUpVotes(@Parent() topic: Topic){
+        const { _id } = topic;
+        return this.reactionService.findTotalTopicUpvotesAndDownvotes(_id.toString());
     }
 }

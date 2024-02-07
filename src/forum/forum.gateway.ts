@@ -104,6 +104,11 @@ export class ForumGateway {
   @SubscribeMessage('postCommentReaction')
   async createCommentReaction(@MessageBody() createReactionDTO: CreateReactionDTO, @ConnectedSocket() client: Socket) {
     console.log('got the message from client', createReactionDTO);
+    //need to check below if an any reaction exists on the same comment, if so, remove it
+    const existingReaction= await this.reactionService.findOneByUserAndComment(createReactionDTO.user, createReactionDTO.comment);
+    if(existingReaction){
+      await this.reactionService.remove(existingReaction._id.toString());
+    }
     const newReaction= await this.reactionService.create(createReactionDTO);
     const newReactionFormatted ={
       _id: newReaction._id.toString(),
@@ -116,6 +121,9 @@ export class ForumGateway {
       __typename: "Reaction"
     }
     this.server.to(createReactionDTO.topic).emit('commentReactionPosted', newReactionFormatted);
+    const reactionCounts = await this.reactionService.findTotalCommentUpvotesAndDownvotes(createReactionDTO.comment);
+    const commentId= createReactionDTO.comment;
+    this.server.to(createReactionDTO.topic).emit('updatedCommentReactionCounts', {commentId,reactionCounts});
     console.log('new reaction', newReactionFormatted);
     return createReactionDTO
   }
@@ -123,6 +131,12 @@ export class ForumGateway {
   @SubscribeMessage('postTopicReaction')
   async createTopicReaction(@MessageBody() createReactionDTO: CreateReactionDTO, @ConnectedSocket() client: Socket) {
     console.log('got the message from client', createReactionDTO);
+    //need to check below if an any reaction exists on the same topic, if so, remove it
+    const existingReaction= await this.reactionService.findOneByUserAndTopic(createReactionDTO.user, createReactionDTO.topic);
+    if(existingReaction){
+      await this.reactionService.remove(existingReaction._id.toString());
+    }
+
     const newReaction= await this.reactionService.create(createReactionDTO);
     const newReactionFormatted ={
       _id: newReaction._id.toString(),
@@ -134,6 +148,9 @@ export class ForumGateway {
       __typename: "Reaction"
     }
     this.server.to(createReactionDTO.topic).emit('topicReactionPosted', newReactionFormatted);
+    const reactionCounts = await this.reactionService.findTotalTopicUpvotesAndDownvotes(createReactionDTO.topic);
+    const topicId= createReactionDTO.topic;
+    this.server.to(createReactionDTO.topic).emit('updatedTopicReactionCounts', {topicId,reactionCounts});
     console.log('new reaction', newReactionFormatted);
     return createReactionDTO
   }

@@ -5,6 +5,8 @@ import { Base } from "src/base/base.schema";
 import { User } from "src/user/schemas/user.schema";
 import { Comment } from "./comment.schema";
 import { Reaction } from "./reaction.schema";
+import { ReactionCount } from "../reaction/reactioncount.model";
+
 
 
 
@@ -40,6 +42,10 @@ export class Topic extends Base {
 
     @Field (() => Int, {description: 'Number of comments related to the Forum', nullable: true})
     commentsCount: number
+
+    @Field(() => [ReactionCount], {description:'Number of upvotes/downvotes'})
+    reactionCounts: ReactionCount[]
+
 
 }
 

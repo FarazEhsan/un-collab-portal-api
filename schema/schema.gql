@@ -201,6 +201,11 @@ type Reaction {
   topic: String
 }
 
+type ReactionCount {
+  _id: String!
+  count: Float!
+}
+
 type Topic {
   """
   Operation performed on the document, 0 for create, 1 for update, 2 for delete
@@ -228,6 +233,7 @@ type Topic {
   reactions: [Reaction!]!
   comments(limit: Int, skip: Int): [Comment!]!
   commentsCount: Int!
+  reactionCounts: [ReactionCount!]!
 }
 
 type Comment {
@@ -253,6 +259,7 @@ type Comment {
   topic: Topic!
   parentComment: Comment
   reactions: [Reaction!]!
+  reactionCounts: [ReactionCount!]!
 }
 
 type Query {

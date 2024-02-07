@@ -5,6 +5,8 @@ import { Reaction } from "./reaction.schema";
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 import { Topic } from "./topic.schema";
 import { User } from "src/user/schemas/user.schema";
+import { ReactionCount } from "../reaction/reactioncount.model";
+
 
 
 
@@ -35,6 +37,9 @@ export class Comment extends Base {
     
     @Field(() => [Reaction], {description:'Reactions of the comment'})
     reactions?: Reaction[]
+
+    @Field(() => [ReactionCount], {description:'Number of upvotes/downvotes'})
+    reactionCounts: ReactionCount[]
 
 }
 

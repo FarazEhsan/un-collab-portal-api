@@ -37,4 +37,41 @@ export class ReactionService {
         console.log('user and comment in reaction service', user, comment)
         return await this.reactionModel.findOneAndDelete({user, comment}).exec();
     }
+    async findOneByUserAndTopic(user: string, topic: string) {
+        return await this.reactionModel.findOne({user, topic, comment: null}).exec();
+    }
+    async findOneByUserAndComment(user: string, comment: string) {
+        return await this.reactionModel.findOne ({user, comment}).exec();
+    }
+
+    async findTotalCommentUpvotesAndDownvotes(comment: string) {
+        return await this.reactionModel.aggregate([
+            {
+                $match: {comment}
+            },
+            {
+                $group: {
+                    _id: '$type',
+                    count: {$sum: 1}
+                }
+            }
+        ]).exec();
+    }
+
+    async findTotalTopicUpvotesAndDownvotes(topic: string) {
+        return await this.reactionModel.aggregate([
+            {
+                $match: {
+                    topic,
+                    comment:null // exclude reactions where comment is null
+                }
+            },
+            {
+                $group: {
+                    _id: '$type',
+                    count: { $sum: 1 }
+                }
+            }
+        ]).exec();
+    }
 }

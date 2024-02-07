@@ -1,5 +1,5 @@
 
-import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, ObjectType, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { CreateCommentDTO } from './dto/create-comment-dto';
 import { CommentService } from './comment.service';
 import { Comment } from '../schemas/comment.schema';
@@ -7,6 +7,11 @@ import { User } from 'src/user/schemas/user.schema';
 import { UserService } from 'src/user/user.service';
 import { ReactionService } from '../reaction/reaction.service';
 import { Reaction } from '../schemas/reaction.schema';
+import { ReactionCount } from '../reaction/reactioncount.model';
+
+
+
+
 @Resolver(()=> Comment)
 export class CommentResolver {
 
@@ -48,6 +53,12 @@ export class CommentResolver {
         }
         return null
         
+    }
+
+    @ResolveField(('reactionCounts'), () => [ReactionCount])
+    getUpVotes(@Parent() comment: Comment){
+        const { _id } = comment;
+        return this.reactionService.findTotalCommentUpvotesAndDownvotes(_id.toString());
     }
 
 }
