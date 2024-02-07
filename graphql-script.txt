@@ -239,6 +239,14 @@ query TopicDetails {
       parentComment{
         text
       }
+      reactionCounts{
+        _id
+        count
+      }
+    }
+    reactionCounts{
+      _id
+      count
     }
   
   }
