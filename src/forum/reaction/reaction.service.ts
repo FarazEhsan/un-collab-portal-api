@@ -23,7 +23,7 @@ export class ReactionService {
     }
 
     findAllByTopic(_id: string)  {
-        return this.reactionModel.find({topic:_id}).populate('user').exec();
+        return this.reactionModel.find({topic:_id, comment:null}).populate('user').exec();
     }
 
     remove(id: string) {
