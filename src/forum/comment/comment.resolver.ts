@@ -55,7 +55,7 @@ export class CommentResolver {
         
     }
 
-    @ResolveField(('reactionCounts'), () => [ReactionCount])
+    @ResolveField(('reactionCounts'), () => ReactionCount)
     getUpVotes(@Parent() comment: Comment){
         const { _id } = comment;
         return this.reactionService.findTotalCommentUpvotesAndDownvotes(_id.toString());

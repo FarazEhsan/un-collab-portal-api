@@ -38,8 +38,8 @@ export class Comment extends Base {
     @Field(() => [Reaction], {description:'Reactions of the comment'})
     reactions?: Reaction[]
 
-    @Field(() => [ReactionCount], {description:'Number of upvotes/downvotes'})
-    reactionCounts: ReactionCount[]
+    @Field(() => ReactionCount, {description:'Number of upvotes/downvotes'})
+    reactionCounts: ReactionCount
 
 }
 

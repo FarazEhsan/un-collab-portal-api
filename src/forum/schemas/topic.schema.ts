@@ -43,8 +43,8 @@ export class Topic extends Base {
     @Field (() => Int, {description: 'Number of comments related to the Forum', nullable: true})
     commentsCount: number
 
-    @Field(() => [ReactionCount], {description:'Number of upvotes/downvotes'})
-    reactionCounts: ReactionCount[]
+    @Field(() => ReactionCount, {description:'Number of upvotes/downvotes'})
+    reactionCounts: ReactionCount
 
 
 }

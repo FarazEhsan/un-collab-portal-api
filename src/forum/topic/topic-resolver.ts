@@ -50,7 +50,7 @@ export class TopicResolver {
         return this.commentService.countAllByTopic({ topic: _id.toString() });
     }
 
-    @ResolveField(('reactionCounts'), () => [ReactionCount])
+    @ResolveField(('reactionCounts'), () => ReactionCount)
     getUpVotes(@Parent() topic: Topic){
         const { _id } = topic;
         return this.reactionService.findTotalTopicUpvotesAndDownvotes(_id.toString());

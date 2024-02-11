@@ -202,8 +202,8 @@ type Reaction {
 }
 
 type ReactionCount {
-  _id: String!
-  count: Float!
+  UPVOTE: Float!
+  DOWNVOTE: Float!
 }
 
 type Topic {
@@ -233,7 +233,7 @@ type Topic {
   reactions: [Reaction!]!
   comments(limit: Int, skip: Int): [Comment!]!
   commentsCount: Int!
-  reactionCounts: [ReactionCount!]!
+  reactionCounts: ReactionCount!
 }
 
 type Comment {
@@ -259,7 +259,7 @@ type Comment {
   topic: Topic!
   parentComment: Comment
   reactions: [Reaction!]!
-  reactionCounts: [ReactionCount!]!
+  reactionCounts: ReactionCount!
 }
 
 type Query {
