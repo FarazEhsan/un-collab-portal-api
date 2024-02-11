@@ -123,6 +123,7 @@ export class ForumGateway {
     this.server.to(createReactionDTO.topic).emit('commentReactionPosted', newReactionFormatted);
     const reactionCounts = await this.reactionService.findTotalCommentUpvotesAndDownvotes(createReactionDTO.comment);
     const commentId= createReactionDTO.comment;
+    console.log('emmiting comment reaction counts', reactionCounts, commentId);
     this.server.to(createReactionDTO.topic).emit('updatedCommentReactionCounts', {commentId,reactionCounts});
     console.log('new reaction', newReactionFormatted);
     return createReactionDTO
@@ -150,6 +151,7 @@ export class ForumGateway {
     this.server.to(createReactionDTO.topic).emit('topicReactionPosted', newReactionFormatted);
     const reactionCounts = await this.reactionService.findTotalTopicUpvotesAndDownvotes(createReactionDTO.topic);
     const topicId= createReactionDTO.topic;
+    console.log('emmiting reaction counts', reactionCounts, topicId);
     this.server.to(createReactionDTO.topic).emit('updatedTopicReactionCounts', {topicId,reactionCounts});
     console.log('new reaction', newReactionFormatted);
     return createReactionDTO

@@ -45,7 +45,7 @@ export class ReactionService {
     }
 
     async findTotalCommentUpvotesAndDownvotes(comment: string) {
-        return await this.reactionModel.aggregate([
+        const results = await this.reactionModel.aggregate([
             {
                 $match: {comment}
             },
@@ -56,14 +56,27 @@ export class ReactionService {
                 }
             }
         ]).exec();
+
+             // Initialize an object with all reaction types set to 0
+             const reactionCounts = {
+                UPVOTE: 0,
+                DOWNVOTE: 0,
+            };
+        
+            // Update the counts for the reaction types that were found
+            for (const result of results) {
+                reactionCounts[result._id] = result.count;
+            }
+        
+            return reactionCounts;
     }
 
     async findTotalTopicUpvotesAndDownvotes(topic: string) {
-        return await this.reactionModel.aggregate([
+        const results = await this.reactionModel.aggregate([
             {
                 $match: {
                     topic,
-                    comment:null // exclude reactions where comment is null
+                    comment: null // match reactions where comment is null
                 }
             },
             {
@@ -73,5 +86,19 @@ export class ReactionService {
                 }
             }
         ]).exec();
+    
+
+        // Initialize an object with all reaction types set to 0
+        const reactionCounts = {
+            UPVOTE: 0,
+            DOWNVOTE: 0,
+        };
+    
+        // Update the counts for the reaction types that were found
+        for (const result of results) {
+            reactionCounts[result._id] = result.count;
+        }
+    
+        return reactionCounts;
     }
 }
