@@ -14,7 +14,7 @@ export class TopicService {
     }
 
     findAll() {
-        return this.topicModel.find().exec();
+        return this.topicModel.find().sort({ createdAt: -1 }).exec();
     }
 
     findOne(id: string) {
