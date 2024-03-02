@@ -185,6 +185,15 @@ export class ForumGateway {
     return user
   }
 
+  @SubscribeMessage('removeComment')
+  async removeComment(@MessageBody() id: string, @ConnectedSocket() client: Socket) {
+    console.log('got the message from client', id);
+    const removedComment= await this.commentService.remove(id);
+    this.server.emit('commentRemoved', id);
+    console.log('removed comment', removedComment);
+    return id
+  }
+
   @SubscribeMessage('findAllForumEvents')
   findAll() {
     return this.forumEventsService.findAll();

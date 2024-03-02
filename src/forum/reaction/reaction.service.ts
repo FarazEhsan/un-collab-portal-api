@@ -37,6 +37,10 @@ export class ReactionService {
         console.log('user and comment in reaction service', user, comment)
         return await this.reactionModel.findOneAndDelete({user, comment}).exec();
     }
+
+    async removeByComment(comment: string) {
+        return await this.reactionModel.deleteMany({comment }).exec();
+    }
     async findOneByUserAndTopic(user: string, topic: string) {
         return await this.reactionModel.findOne({user, topic, comment: null}).exec();
     }

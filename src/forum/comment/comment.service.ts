@@ -3,10 +3,11 @@ import { InjectModel } from '@nestjs/mongoose';
 import { CommentDocument, Comment } from '../schemas/comment.schema';
 import { Model } from 'mongoose';
 import { CreateCommentDTO } from './dto/create-comment-dto';
+import { ReactionService } from '../reaction/reaction.service';
 
 @Injectable()
 export class CommentService {
-    constructor(@InjectModel(Comment.name) private commentModel: Model<CommentDocument>) { }
+    constructor(@InjectModel(Comment.name) private commentModel: Model<CommentDocument>, private readonly reactionService:ReactionService) { }
     async create(createCommentDto: CreateCommentDTO) {
 
         const newComment= new this.commentModel(createCommentDto);
@@ -37,7 +38,9 @@ export class CommentService {
         return `This action updates a #${id} comment`;
     }
     
-    remove(id: number) {
-        return `This action removes a #${id} comment`;
+    async remove(id: string) {
+        //will remove reactions with the comment
+        await this.reactionService.removeByComment(id.toString());
+        return await this.commentModel.findByIdAndDelete(id).exec();
     }
 }
